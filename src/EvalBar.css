@@ -1,0 +1,20 @@
+/* This CSS is mainly redundant given Material-UI's in-built styling, 
+   but if there's any custom styling you want to retain or add, you can put it here */
+
+   .eval-container {
+    width: 48%; /* Slightly less than half to account for any potential padding/margins */
+    margin-bottom: 20px;
+  }
+
+.player-names {
+    margin-bottom: 10px;
+}
+
+.player-name {
+    overflow: hidden; /* Hide any overflowing content */
+    white-space: nowrap; /* Prevent player names from wrapping */
+    text-overflow: ellipsis; /* Show ellipsis (...) for long names */
+}
+
+/* Given that we're using Material-UI's Box component, we can make use of in-built styling 
+   for the most part and might not need a lot of external CSS for the bars. */
