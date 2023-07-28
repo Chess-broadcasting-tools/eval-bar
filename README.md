@@ -10,6 +10,8 @@ Chessbase India Evaluation Bars is a web application that provides a brief overv
 To get the **Broadcast link** 
 <img width="1157" alt="Screenshot 2023-07-28 at 5 39 15 PM" src="https://github.com/Bot-Rakshit/eval-bar/assets/89170079/c7b4748f-9c7d-4721-b6f6-44c95f359a05">
 
+ If you were to clone the probject make sure to change the path of stockfish in "chess_api.py"
+
 
 **Features**
 *Input Lichess broadcast IDs and fetch evaluations for each position in the games.
