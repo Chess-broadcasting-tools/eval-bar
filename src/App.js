@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, TextField, Button, Container, Alert, Box } from '@mui/material';
 import EvalBar from './evalbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Chess } from 'chess.js';
 import css from "./App.css";
 
- export const theme = createTheme({
+const theme = createTheme({
   palette: {
     mode: 'dark',
     background: {
@@ -28,6 +28,7 @@ function App() {
       whitePlayer: 'White',
       blackPlayer: 'Black',
       error: null,
+      lastFEN: '', // Store the last FEN here
     },
   ]);
 
@@ -62,56 +63,43 @@ function App() {
     const chess = new Chess();
     chess.loadPgn(moveString);
 
-    try {
-      const evalData = await fetchEvaluation(chess.fen());
-
-      if (evalData !== null && evalData !== undefined) {
+    const newFEN = chess.fen();
+    if (newFEN !== link.lastFEN) {
+      try {
+        const evalData = await fetchEvaluation(newFEN);
         const updatedLinks = [...links];
         updatedLinks[index] = {
           ...link,
           evaluation: evalData.evaluation,
           whitePlayer,
           blackPlayer,
+          lastFEN: newFEN,
         };
         setLinks(updatedLinks);
-      } else {
+      } catch (e) {
         const updatedLinks = [...links];
         updatedLinks[index] = {
           ...link,
-          whitePlayer,
-          blackPlayer,
+          error: e.message,
+          lastFEN: newFEN,
         };
         setLinks(updatedLinks);
       }
-    } catch (e) {
-      const updatedLinks = [...links];
-      updatedLinks[index] = {
-        ...link,
-        error: e.message,
-      };
-      setLinks(updatedLinks);
     }
   };
 
-  const addNewLink = () => {
-    const newLink = {
-      broadcastID: '',
-      evaluation: null,
-      whitePlayer: 'White',
-      blackPlayer: 'Black',
-      error: null,
-    };
-    setLinks([...links, newLink]);
+  const fetchAllPgn = async () => {
+    for (let index = 0; index < links.length; index++) {
+      if (links[index].broadcastID.trim() !== '') {
+        await fetchPgn(index);
+      }
+    }
   };
 
-  const fetchAllPgn = () => {
-    links.forEach((link, index) => {
-      if (link.broadcastID.trim() !== '') {
-        console.log(`Fetching PGN for link ${index}`);
-        fetchPgn(index);
-      }
-    });
-  };
+  useEffect(() => {
+    const fetchInterval = setInterval(fetchAllPgn, 30000);
+    return () => clearInterval(fetchInterval);
+  }, [links]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,7 +110,6 @@ function App() {
             <Typography variant="h5" flexGrow={1} align="center">Chessbase India Evaluation Bars</Typography>
           </Toolbar>
         </AppBar>
-
         <Box mt={4} px={3}> 
           {links.map((link, index) => (
             <Box key={index} my={3}>
@@ -148,27 +135,24 @@ function App() {
               {link.error && <Alert severity="error" style={{ marginTop: '10px' }}>{link.error}</Alert>}
             </Box>
           ))}
-          <Button variant="contained" color="secondary" style={{ marginTop: '10px' }} onClick={addNewLink}>
+          <Button variant="contained" color="secondary" style={{ marginTop: '10px' }} onClick={() => setLinks([...links, { broadcastID: '', evaluation: null, whitePlayer: 'White', blackPlayer: 'Black', error: null, lastFEN: '' }])}>
             Add Another Link
           </Button>
         </Box>
-
         <Box mt={4} px={3} display="flex" flexWrap="wrap" justifyContent="space-between">
-        {links.map((link, index) => (
-          <EvalBar 
-            key={index} 
-            evaluation={link.evaluation} 
-            whitePlayer={link.whitePlayer} 
-            blackPlayer={link.blackPlayer} 
-          />
-        ))}
-      </Box>
-    </Container>
-  </ThemeProvider>
-);
-        }
+          {links.map((link, index) => (
+            <EvalBar 
+              key={index} 
+              evaluation={link.evaluation} 
+              whitePlayer={link.whitePlayer} 
+              blackPlayer={link.blackPlayer} 
+            />
+          ))}
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
+}
 
 export default App;
-
-
 
