@@ -97,7 +97,7 @@ function App() {
   };
 
   useEffect(() => {
-    const fetchInterval = setInterval(fetchAllPgn, 30000);
+    const fetchInterval = setInterval(fetchAllPgn, 2000);
     return () => clearInterval(fetchInterval);
   }, [links]);
 
@@ -155,4 +155,3 @@ function App() {
 }
 
 export default App;
-

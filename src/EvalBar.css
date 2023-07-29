@@ -1,20 +1,89 @@
-/* This CSS is mainly redundant given Material-UI's in-built styling, 
-   but if there's any custom styling you want to retain or add, you can put it here */
-
-   .eval-container {
-    width: 48%; /* Slightly less than half to account for any potential padding/margins */
+.eval-container {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    background-color: rgba(28, 28, 28, 0.5);  
+    border-radius: 2px;
+    padding: 20px; 
+    width: 40%;  
     margin-bottom: 20px;
-  }
+}
 
 .player-names {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     margin-bottom: 10px;
 }
 
-.player-name {
-    overflow: hidden; /* Hide any overflowing content */
-    white-space: nowrap; /* Prevent player names from wrapping */
-    text-overflow: ellipsis; /* Show ellipsis (...) for long names */
+.eval-bars {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 30px;
+    background-color: black;
+    border-radius: 1px;
+    overflow: hidden;
 }
 
-/* Given that we're using Material-UI's Box component, we can make use of in-built styling 
-   for the most part and might not need a lot of external CSS for the bars. */
+.white-bar {
+    position: absolute;
+    left: 0;
+    height: 100%; 
+    background-color: white;
+    transition: width 0.8s;
+}
+
+.evaluation-value {
+    margin-top: 10px;
+}
+
+* {
+    font-family: 'Roboto', sans-serif; 
+    transition: all 0.3s ease;
+}
+
+/* AppBar */
+.app-bar {
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    background-color: #1a1a1a; /* A darker tone */
+}
+
+/* Buttons */
+button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    transform: translateY(-2px); /* A lift effect on hover */
+}
+
+/* TextFields */
+.text-field {
+    border-radius: 5px;
+}
+
+.text-field:focus {
+    border-color: #1a73e8; /* Using the primary color */
+    box-shadow: 0px 0px 5px rgba(26, 115, 232, 0.4); /* A soft glow */
+}
+
+
+.eval-container {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.eval-bars {
+    border-radius: 50px; 
+
+
+.tooltip, .modal {
+    background-color: #1a1a1a;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+}

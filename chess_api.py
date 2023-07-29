@@ -5,7 +5,7 @@ from stockfish import Stockfish
 app = Flask(__name__)
 CORS(app)
 
-stockfish_path = "//opt/homebrew/bin/stockfish"  # Replace with your Stockfish path
+stockfish_path = "//opt/homebrew/bin/stockfish"  
 stockfish = Stockfish(stockfish_path)
 stockfish.set_depth(10)
 
@@ -20,11 +20,15 @@ def evaluate():
     stockfish.set_fen_position(fen)
     evaluation = stockfish.get_evaluation()
 
-    # The stockfish library returns evaluations in centipawns or mate-in-x
+    # sometimes this responds in mate in xyz , so it is important to do this :) , man i am tired of debu
     if evaluation["type"] == "cp":
         score = evaluation["value"] / 100.0
     elif evaluation["type"] == "mate":
-        score = 9999 * evaluation["value"] / abs(evaluation["value"])  # +9999 for mating, -9999 for getting mated
+        score = 9999 * evaluation["value"] / abs(evaluation["value"]) 
+    
+    score = score * 1.2  # to match with lichess evaluation
+    score = round(score,1)  # rounding off for better look!
+
 
     return jsonify(evaluation=score)
 

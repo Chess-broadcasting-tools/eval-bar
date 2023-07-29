@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "chess.js": "^1.0.0-beta.6",
+    "chessboardjsx": "^2.4.7",
     "pgn-parser": "^2.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
