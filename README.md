@@ -1,7 +1,10 @@
 Chessbase India Evaluation Bars
 
 
-<img width="1182" alt="Screenshot 2023-07-28 at 4 02 45 PM" src="https://github.com/Bot-Rakshit/eval-bar/assets/89170079/8b84631a-d6a3-41bf-b921-83a116a8d2c5">
+![Screenshot 2023-07-29 at 1 04 22 PM](https://github.com/Bot-Rakshit/eval-bar/assets/89170079/03ffa159-e625-48ea-a3c6-82372682a823)
+
+
+
 
 
 **Overview**
