@@ -13,7 +13,8 @@ function ChessBoardComponent({ fen, evaluation }) {
             from: sourceSquare,
             to: targetSquare,
             promotion: 'q' /
-        });
+    
+''    });
 
        
         if (move !== null) {

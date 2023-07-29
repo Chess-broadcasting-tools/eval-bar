@@ -7,8 +7,8 @@ block_cipher = None
 a = Analysis(
     ['chess_api.py'],
     pathex=[],
-    binaries=[],
-    datas=[],
+    binaries=[('//opt/homebrew/bin/stockfish', '.')],
+    datas=[('./build', 'static')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
