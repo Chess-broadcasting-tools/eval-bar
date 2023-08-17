@@ -44,7 +44,7 @@ function App() {
   const abortController = useRef(null);
 
   const fetchEvaluation = async (fen) => {
-    const endpoint = `http://139.59.79.118:5000/evaluate?fen=${encodeURIComponent(fen)}`;
+    const endpoint = `http://"IP(of the flask server)"/evaluate?fen=${encodeURIComponent(fen)}`;
     const response = await fetch(endpoint, { method: 'GET', mode: 'cors' });
     if (!response.ok) {
       throw new Error('Network response was not ok');
