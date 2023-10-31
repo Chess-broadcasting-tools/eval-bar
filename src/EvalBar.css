@@ -1,89 +1,136 @@
 .eval-container {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    background-color: rgba(28, 28, 28, 0.5);  
-    border-radius: 2px;
-    padding: 20px; 
-    width: 40%;  
-    margin-bottom: 20px;
-}
-
-.player-names {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.eval-bars {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 30px;
-    background-color: black;
-    border-radius: 1px;
-    overflow: hidden;
-}
-
-.white-bar {
-    position: absolute;
-    left: 0;
-    height: 100%; 
-    background-color: white;
-    transition: width 0.8s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px;
+  width: 27%;  /* Retained this width */
+  margin: 1.2% auto;  /* Adjusted for vertical spacing and centering */
+  background: rgb(124, 121, 121);
+background: linear-gradient(90deg, rgb(65, 63, 63) 50%, rgb(55, 53, 53) 89%);
+  border-radius: 0px;
+  border: 4px solid rgb(200,135,60);  
+  box-shadow: 0 4px 10px rgba(10, 9, 9, 0);
+  position: relative;
 }
 
 .evaluation-value {
-    margin-top: 10px;
+  font-weight: bold;
+  color: white;
+  font-size: 0.1rem;  /* Decreased font size */
+  margin-top: 12px;  /* Moved below the player names */
 }
 
-* {
-    font-family: 'Roboto', sans-serif; 
-    transition: all 0.3s ease;
+.player-box {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0px;
+  border-radius: 0px;
 }
 
-/* AppBar */
-.app-bar {
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-    background-color: #1a1a1a; /* A darker tone */
+.player-names {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-/* Buttons */
-button {
-    border-radius: 20px;
-    padding: 10px 20px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+.white-player, .black-player {
+  flex: 1;
+  text-align: center;
+  padding: 2px 8px;  /* Adjusted padding for a sleeker design */
 }
 
-button:hover {
-    transform: translateY(-2px); /* A lift effect on hover */
+.white-player {
+  background-color: white;
+  color: black;
 }
 
-/* TextFields */
-.text-field {
-    border-radius: 5px;
-}
-
-.text-field:focus {
-    border-color: #1a73e8; /* Using the primary color */
-    box-shadow: 0px 0px 5px rgba(26, 115, 232, 0.4); /* A soft glow */
+.black-player {
+  background-color: black;
+  color: white;
 }
 
 
-.eval-container {
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+
+.player-names {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
 .eval-bars {
-    border-radius: 50px; 
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 15px;
+  background-color: #000000;
+  border-radius: 1px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom:5px;
+}
+
+.white-bar {
+  position: absolute;
+  left: 0;
+  height: 100%; 
+  background-color: #ffffff;
+  transition: width 1.2s;
+}
 
 
-.tooltip, .modal {
-    background-color: #1a1a1a;
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+.evaluation-value {
+  font-size: 12px; /* reducing the font size */
+  margin-top: 5px; 
+  margin-bottom: 5px;
 }
+
+/* Additional styles for player names */
+.white-player {
+  background-color: #ecdab9;
+  color: black;
+  padding: 2px 10px;
+  border-radius: 5px;
 }
+
+.black-player {
+  background-color: #ae8a69;
+  color: rgb(0, 0, 0);
+  padding: 2px 10px;
+  border-radius: 5px;
+  transition: width 1.2s;
+}
+
+.eval-container {
+  padding: 5px; /* Reduced padding for a more compact look */
+  border-radius: 4px; /* Sharper borders */
+}
+
+.evaluation-value {
+  font-size: 12px; /* Adjusted font size */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.player-names {
+  margin-bottom: 4px; /* Reduced margin for compactness */
+}
+
+.white-player, .black-player {
+  padding: 2px 8px; /* Adjusted padding for sleeker design */
+  border-radius: 3px; /* Sharper borders */
+  font-size: 12px; /* Smaller font size for sleeker design */
+}
+
+.eval-bars {
+  height: 20px; /* Reduced height for sleeker design */
+  border-radius: 15px; /* Sharper borders */
+}
+
+
+
+
