@@ -1,60 +1,89 @@
-/* Global settings */
-* {
-  font-family: 'Roboto', sans-serif;
-  transition: all 1.2s ease;
+:root {
+  --primary-font: 'Roboto', sans-serif;
+  --transition-speed: 0.3s;
+  --primary-color: rgb(0, 177, 64);
+  background: rgb(6, 151, 218);
+background: linear-gradient(155deg, rgb(10, 123, 180) 0%, rgb(72, 155, 214) 100%);
+  --container-bg: rgba(13, 255, 0, 0.9);
+  --border-color: #ccc;
+  --focus-color: #1a73e8;
+  --button-bg: #1a1a1a;
+  --button-hover-transform: translateY(-2px);
+  --box-shadow-light: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  --box-shadow-dark: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
-/* Using hexadecimal color code directly */
-body {
-  background: #00b140;
-  height: 100vh;
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: var(--primary-font);
   overflow: auto;
 }
 
-
-/* App Container */
-.container {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: var(--spacing-medium);
-  margin-top: var(--spacing-large);
+* {
+  transition: all var(--transition-speed) ease;
 }
 
-/* Evaluation Bars Section */
+body.chroma-background {
+  background-color: var(--primary-color);
+}
+
+body.dark-background {
+  background: var(--dark-gradient);
+}
+
+.container {
+  background: var(--container-bg);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 95%;
+  box-shadow: var(--box-shadow-light);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .button {
+    padding: 8px 16px;
+  }
+}
+
 .bars-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 2px; 
+  gap: 2px;
 }
 
-/* AppBar Styling *
-
-/* TextFields Styling */
 .text-field {
   border-radius: 5px;
+  border: 1px solid var(--border-color);
 }
 
 .text-field:focus {
-  border-color: #1a73e8;
+  border-color: var(--focus-color);
   box-shadow: 0px 0px 5px rgba(26, 115, 232, 0.4);
 }
 
-/* Buttons Styling */
-button {
+.button {
   border-radius: 20px;
   padding: 10px 20px;
   text-transform: uppercase;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-light);
+  transition: transform 0.2s ease;
 }
 
-button:hover {
-  transform: translateY(-2px);
+.button:hover {
+  transform: var(--button-hover-transform);
 }
-
-/* For Tooltip and Modal, if they are used in the future */
+cd
 .tooltip, .modal {
-  background-color: #1a1a1a;
+  background-color: var(--button-bg);
   border-radius: 5px;
   padding: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow-dark);
 }
