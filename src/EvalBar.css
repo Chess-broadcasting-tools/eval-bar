@@ -142,7 +142,7 @@ background: linear-gradient(90deg, rgb(65, 63, 63) 50%, rgb(55, 53, 53) 89%);
   position: absolute;
   top: 0;
   left: 50%;
-  width: 1px;
+  width: 3px;
   height: 100%;
   background-color: red;
 }
