@@ -45,6 +45,7 @@ function EvalBar({ evaluation, whitePlayer = 'White', blackPlayer = 'Black', res
             {!result && (
                 <Box className="eval-bars">
                     <Box className="white-bar" style={{ width: getWhiteBarWidth() }}></Box>
+                    <Box className="zero-marker"></Box>
                 </Box>
             )}
         </Box>
