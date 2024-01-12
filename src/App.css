@@ -1,9 +1,8 @@
-:root {
+body {
   --primary-font: 'Roboto', sans-serif;
   --transition-speed: 0.3s;
   --primary-color: rgb(0, 177, 64);
-  background: rgb(6, 151, 218);
-background: linear-gradient(155deg, rgb(10, 123, 180) 0%, rgb(72, 155, 214) 100%);
+  background: rgb(70, 74, 72);
   --container-bg: rgba(13, 255, 0, 0.9);
   --border-color: #ccc;
   --focus-color: #1a73e8;
@@ -13,7 +12,7 @@ background: linear-gradient(155deg, rgb(10, 123, 180) 0%, rgb(72, 155, 214) 100%
   --box-shadow-dark: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-body, html, #root {
+body, html {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -29,35 +28,11 @@ body.chroma-background {
   background-color: var(--primary-color);
 }
 
-body.dark-background {
-  background: var(--dark-gradient);
-}
 
-.container {
-  background: var(--container-bg);
-  border-radius: 10px;
-  padding: 20px;
-  margin: 30px auto;
-  max-width: 95%;
-  box-shadow: var(--box-shadow-light);
-}
 
-@media (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
 
-  .button {
-    padding: 8px 16px;
-  }
-}
 
-.bars-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2px;
-}
+
 
 .text-field {
   border-radius: 5px;
@@ -79,11 +54,4 @@ body.dark-background {
 
 .button:hover {
   transform: var(--button-hover-transform);
-}
-cd
-.tooltip, .modal {
-  background-color: var(--button-bg);
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: var(--box-shadow-dark);
 }

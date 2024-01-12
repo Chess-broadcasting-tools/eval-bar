@@ -6,6 +6,7 @@ import EvalBar from './evalbar';
 import css from './App.css';
 import TournamentsList from './TournamentsList';
 import { WidthFull } from '@mui/icons-material';
+import CustomizeEvalBar from './CustomizeEvalBar';
 
 const theme = createTheme({
   palette: {
@@ -14,11 +15,15 @@ const theme = createTheme({
       default: 'transparent',
     },
     primary: {
-      main: '#ADD8E6',
+      main: '#00008b',
     },
     secondary: {
       main: '#b9bbce',
     },
+    tertiary: {
+      main: '#ADD8E6'
+
+    }
   },
   fontFamily: [
     '-apple-system',
@@ -34,22 +39,38 @@ const theme = createTheme({
   ].join(','),
 });
 
-const GameCard = ({ game, onClick, isSelected }) => (
-  <Button 
-      variant={isSelected ? "contained" : "outlined"} 
-      color={isSelected ? "primary" : "secondary"} 
-      style={{
-          margin: '2px',
-          padding: '6px',
-          fontSize: '0.8em',
-          fontWeight: 'bold',
-          boxShadow: isSelected ? '0px 0px 12px 2px rgba(252,188,213,0.6)' : 'none'
-      }}
+/**
+ * Renders a button with customizable styles.
+ * @param {Object} props - The component props.
+ * @param {string} props.game - The name of the game to be displayed on the button.
+ * @param {function} props.onClick - The function to be executed when the button is clicked.
+ * @param {boolean} props.isSelected - A flag indicating whether the button is selected or not.
+ * @returns {JSX.Element} - The rendered GameCard component.
+ */
+const GameCard = ({ game, onClick, isSelected }) => {
+  const variant = isSelected ? "contained" : "outlined";
+  const color = isSelected ? "tertiary" : "secondary";
+  const boxShadow = isSelected ? '0px 0px 12px 2px rgba(252,188,213,0.6)' : 'none';
+
+  const buttonStyle = {
+    margin: '2px',
+    padding: '6px',
+    fontSize: '0.8em',
+    fontWeight: 'bold',
+    boxShadow
+  };
+
+  return (
+    <Button 
+      variant={variant} 
+      color={color} 
+      style={buttonStyle}
       onClick={onClick}
-  >
+    >
       {game}
-  </Button>
-);
+    </Button>
+  );
+};
 function App() {
   const [broadcastIDs, setBroadcastIDs] = useState([]);
   const [isBroadcastLoaded, setIsBroadcastLoaded] = useState(false);
@@ -57,12 +78,25 @@ function App() {
   const [availableGames, setAvailableGames] = useState([]);
   const [selectedGames, setSelectedGames] = useState([]);
   const [background, setBackground] = useState('chroma');
-  const [isChromaBackground, setIsChromaBackground] = useState(true);
+  const [isChromaBackground, setIsChromaBackground] = useState(false);
   const [prevEvals, setPrevEvals] = useState({});
   const [layout, setLayout] = useState('grid'); // default layout is 'row'
+  const [selectedComponent, setSelectedComponent] = useState(null);
 
   const allGames = useRef("");
   const abortControllers = useRef({});
+
+  const [customStyles, setCustomStyles] = useState({
+    evalContainerBg: '#7c7979', // default values
+    blackBarColor: '#000000',
+    whiteBarColor: '#ffffff',
+    whitePlayerColor: '#ecdab9',
+    blackPlayerColor: '#ae8a69',
+    whitePlayerNameColor: '#000000', // Default color for white player name
+    blackPlayerNameColor: '#FFFFFF', // Default color for black player name
+    evalContainerBorderColor: '#000000', 
+  });
+  
 
   const fetchEvaluation = async (fen) => {
     const endpoint = `http://139.59.79.118:5000/evaluate?fen=${encodeURIComponent(fen)}`;
@@ -77,17 +111,7 @@ function App() {
   setLinks(prevLinks => prevLinks.filter((link, i) => i !== index));
 };
 
-const toggleBackground = () => {
-  if (background === 'chroma') {
-    document.body.classList.remove('chroma-background');
-    document.body.classList.add('dark-background');
-    setBackground('dark');
-  } else {
-    document.body.classList.remove('dark-background');
-    document.body.classList.add('chroma-background');
-    setBackground('chroma');
-  }
-};
+
 
 
   const handleTournamentSelection = async (tournamentIds) => {
@@ -104,6 +128,7 @@ const toggleBackground = () => {
     const response = await fetch(streamURL, { signal: abortControllers.current[tournamentId].signal });
     console.log("Stream URL:", streamURL);
     const reader = response.body.getReader();
+    document.body.classList.add('chroma-background');
 
     const processStream = async () => {
       const { done, value } = await reader.read();
@@ -117,12 +142,7 @@ const toggleBackground = () => {
     processStream();
   };
 
-  const handleCloseConnection = () => {
-    Object.values(abortControllers.current).forEach(controller => controller.abort());
-    abortControllers.current = {};
-    setIsBroadcastLoaded(false);
-    setBroadcastIDs([]);
-  };
+
   const fetchAvailableGames = () => {
     const games = allGames.current.split("\n\n\n");
     const gameOptions = games.map(game => {
@@ -239,7 +259,19 @@ const toggleBackground = () => {
       await updateEvaluationsForLink(link);
     }
   };
-  
+  const handleGenerateLink = () => {
+    const stateData = {
+      broadcastIDs,
+      selectedGames,
+      customStyles
+    };
+
+    const serializedData = encodeURIComponent(JSON.stringify(stateData));
+    navigator.clipboard.writeText(`${window.location.origin}/broadcast/${serializedData}`)
+      .then(() => alert('Link copied to clipboard!'))
+      .catch(err => console.error('Failed to copy link:', err));
+  };
+
   useEffect(() => {
     if (links.length) {
       const interval = setInterval(() => {
@@ -249,14 +281,20 @@ const toggleBackground = () => {
     }
   }, [links]);
   useEffect(() => {
-    if (isChromaBackground) {
-      document.body.classList.add('chroma-background');
-      document.body.classList.remove('dark-background');
-    } else {
-      document.body.classList.remove('chroma-background');
-      document.body.classList.add('dark-background');
+    const queryParams = new URLSearchParams(window.location.search);
+    const stateParam = queryParams.get('state');
+
+    if (stateParam) {
+        try {
+            const { broadcastIDs, selectedGames, customStyles } = JSON.parse(decodeURIComponent(stateParam));
+            setBroadcastIDs(broadcastIDs);
+            setSelectedGames(selectedGames);
+            setCustomStyles(customStyles);
+        } catch (error) {
+            console.error("Error parsing state from URL", error);
+        }
     }
-  }, [isChromaBackground]);
+}, []);
 
 
 
@@ -264,75 +302,46 @@ const toggleBackground = () => {
 
 
 
-  return (
-    <ThemeProvider theme={theme}>
-        <Container maxWidth="md" className={isChromaBackground ? 'chroma-background' : 'dark-background'}>
-        <Toolbar>
-    <Box style={{ display: 'flex', justifyContent: 'center', flexGrow: 1.5 }}>
-        <img src="https://i.imgur.com/z2fbMtT.png" alt="ChessBase India Logo" style={{ height: '100px', marginTop: '20px' }} />
-    </Box>
-    <Button 
-        variant="contained" 
-        onClick={toggleBackground}
-    >
-        BG
-    </Button>
-</Toolbar>
-            
-            {isBroadcastLoaded ? (
-                <Box mt={4} px={3}
-                    sx={{
-                        backgroundColor: 'rgba(1, 1, 1, 0.6)',
-                        padding: 2,
-                        borderRadius: 2,
-                        marginBottom: 2
-                    }}>
-                    {availableGames.map((game, index) => (
-                        <GameCard 
-                            key={index} 
-                            game={game} 
-                            onClick={() => handleGameSelection(game)}
-                            isSelected={selectedGames.includes(game)}
-                        />
-                    ))}
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ marginTop: '10px' }}
-                        onClick={addSelectedGames}
-                    >
-                        Add Selected Games Bar
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        style={{ marginTop: '10px' }}
-                        onClick={handleCloseConnection}
-                    >
-                        Close Connection
-                    </Button>
-                </Box>
-            ) : (
-                <TournamentsList onSelect={handleTournamentSelection} />
-            )}
-            
-            <Box mt={4} px={3} className="eval-bars-container">
-    {links.map((link, index) => (
-      <Box display="flex" flexDirection="row" alignItems="flex-start" justifyContent="center" style={{ marginBottom: '0px' }}>
+return (
+  <ThemeProvider theme={theme}>
+    <Container maxWidth="md" className={isChromaBackground ? 'chroma-background' : 'dark-background'}>
+      <Toolbar>
+        <Box style={{ display: 'flex', justifyContent: 'center', flexGrow: 1.5 }}>
+          <img src="https://i.imgur.com/z2fbMtT.png" alt="ChessBase India Logo" style={{ height: '100px', marginTop: '20px' }} />
+        </Box>
+      </Toolbar>
+      {isBroadcastLoaded ? (
+        <Box mt={4} px={3} sx={{ backgroundColor: 'rgba(50, 67, 100, 1)', padding: 2, borderRadius: 2, marginBottom: 2 }}>
+          {availableGames.map((game, index) => (
+            <GameCard key={index} game={game} onClick={() => handleGameSelection(game)} isSelected={selectedGames.includes(game)} />
+          ))}
+          <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={addSelectedGames}>
+            Add Selected Games Bar
+          </Button>
+          <CustomizeEvalBar customStyles={customStyles} setCustomStyles={setCustomStyles} />
+        </Box>
+      ) : (
+        <div className="full-width">
+          <TournamentsList onSelect={handleTournamentSelection} />
+        </div>
+      )}
+      <Box mt={4} px={3} className="eval-bars-container">
+        {links.map((link, index) => (
+          <Box key={index} display="flex" flexDirection="row" alignItems="flex-start" justifyContent="center" style={{ marginBottom: '0px' }}>
             <Button className="close-button" onClick={() => handleRemoveLink(index)}>Close</Button>
             <EvalBar
-                key={`${link.whitePlayer}-${link.blackPlayer}-${link.result}`} 
-                evaluation={link.evaluation}
-                whitePlayer={link.whitePlayer}
-                blackPlayer={link.blackPlayer}
-                result={link.result}
-                layout={layout}
+              evaluation={link.evaluation}
+              whitePlayer={link.whitePlayer}
+              blackPlayer={link.blackPlayer}
+              result={link.result}
+              layout={layout}
+              customStyles={customStyles}
             />
-        </Box>
-    ))}
-</Box>
-        </Container>
-    </ThemeProvider>
+          </Box>
+        ))}
+      </Box>
+    </Container>
+  </ThemeProvider>
 );
-                }
-export default App;
+        }
+        export default App;

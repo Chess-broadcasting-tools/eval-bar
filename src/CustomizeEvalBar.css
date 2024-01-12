@@ -1,0 +1,111 @@
+/* Base Styling for the Customize Evaluation Bar Container */
+.customize-eval-bar {
+    background-color: #003366; /* Deep navy blue background */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect for the entire container */
+.customize-eval-bar:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Styling for buttons and labels */
+.customize-eval-bar button, .customize-eval-bar label {
+    background-color: #0077B6; /* Vibrant blue */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect for buttons and labels */
+.customize-eval-bar button:hover, .customize-eval-bar label:hover {
+    background-color: #0096c7; /* Lighter blue */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Customization content area */
+.customization-content {
+    margin-top: 20px;
+    border: 2px solid #0096c7;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: #001d3d; /* Darker shade for contrast */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Dropdown Select Component */
+.customization-content select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #0077B6;
+    background-color: #0d0b0b;
+    color: #e0e3e7;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.customization-content select:focus {
+    border-color: #25bdef;
+}
+
+/* Save Button Styling */
+.save-button {
+    background-color: #28a745; /* Green for confirmation */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.save-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Color Picker Container */
+.color-picker-container {
+    border: 2px solid #0077B6;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #010000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Label for Currently Customizing Component */
+.customizing-label {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    color: #d1e3f4;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+/* General button styling */
+.primary-button {
+    width: auto; /* Adjust width as needed */
+    padding: 10px 20px;
+    margin: 5px; /* Spacing between buttons */
+    display: inline-block; /* For layout */
+    transition: transform 0.2s ease-in-out;
+}
+
+.primary-button:hover {
+    transform: scale(1.05);
+}

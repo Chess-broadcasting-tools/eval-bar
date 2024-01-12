@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, ButtonGroup, Button } from '@mui/material';
 import './EvalBar.css';
 
-function EvalBar({ evaluation, whitePlayer = 'White', blackPlayer = 'Black', result, layout }) {
+function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customStyles }) {
     const getBarSegment = (evalValue) => {
         return Math.min(Math.max(Math.round(evalValue), -5), +5);
     };
@@ -32,19 +32,45 @@ function EvalBar({ evaluation, whitePlayer = 'White', blackPlayer = 'Black', res
         }
         return evalValue;
     };
+    
+     const displayResult = formatEvaluation(result || evaluation);
+     return (
+    
+        <Box className={`eval-container ${layout}`} style={{ background: customStyles.evalContainerBg, border: `5px solid ${customStyles.evalContainerBorderColor}` }}>
 
-    return (
-        <Box className={`eval-container ${layout}`}>
-            <Box className="player-names" display="flex" justifyContent="space-between">
-                <Typography variant="h6" className="white-player"><b>{formatName(whitePlayer)}</b></Typography>
-                <Typography variant="h6" className="black-player"><b>{formatName(blackPlayer)}</b></Typography>
-            </Box>
-            <Typography variant="subtitle1" color="white" className="evaluation-value">
-                {result || formatEvaluation(evaluation)}
+<Box className="player-names" display="flex" justifyContent="space-between">
+    <Typography 
+        variant="h6" 
+        className="white-player" 
+        style={{ 
+            background: customStyles.whitePlayerColor, 
+            color: customStyles.whitePlayerNameColor, 
+            fontSize: '1.2rem', // Adjust the font size as needed
+            padding: '2px 8px'
+        }}
+    >
+        <b>{formatName(whitePlayer)}</b>
+    </Typography>
+    <Typography 
+        variant="h6" 
+        className="black-player" 
+        style={{ 
+            background: customStyles.blackPlayerColor, 
+            color: customStyles.blackPlayerNameColor, 
+            fontSize: '1.2rem', // Adjust the font size as needed
+            padding: '2px 8px'
+        }}
+    >
+        <b>{formatName(blackPlayer)}</b>
+    </Typography>
+</Box>
+
+            <Typography variant="h7" color="white" className="evaluation-value" style={{ marginTop: '5px', marginBottom: '5px', fontSize: '18px', fontWeight: 'bold' }}>
+                {result || evaluation}
             </Typography>
             {!result && (
-                <Box className="eval-bars">
-                    <Box className="white-bar" style={{ width: getWhiteBarWidth() }}></Box>
+                <Box className="eval-bars" style={{ height: '30px', borderRadius: '15px', background: customStyles.blackBarColor, overflow: 'hidden', margin: '5px 0' }}>
+                    <Box className="white-bar" style={{ width: getWhiteBarWidth(), background: customStyles.whiteBarColor }}></Box>
                     <Box className="zero-marker"></Box>
                 </Box>
             )}

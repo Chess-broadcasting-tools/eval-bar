@@ -108,13 +108,15 @@ const SearchButton = styled.button`
     background-color: #36A420;
   }
 `;
-
 function TournamentsList({ onSelect }) {
   const [tournaments, setTournaments] = useState([]);
   const [filteredTournaments, setFilteredTournaments] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTournaments, setSelectedTournaments] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
+  const [customUrl, setCustomUrl] = useState('');
+  const [tournamentId, setTournamentId] = useState('');
+
   useEffect(() => {
     fetch('https://lichess.org/api/broadcast?nb=50')
       .then(response => response.text())
@@ -137,6 +139,20 @@ function TournamentsList({ onSelect }) {
     setFilteredTournaments(filtered);
   };
 
+  const handleCustomUrlChange = (e) => {
+    setCustomUrl(e.target.value);
+    const urlParts = e.target.value.split('/');
+    const id = urlParts[urlParts.length - 1];
+    setTournamentId(id);
+  };
+
+  const onSelectTournament = () => {
+    if (tournamentId) {
+      setSelectedTournaments([tournamentId]);
+      onSelect([tournamentId]); // This line is added to simulate the selection
+    }
+  };
+
   return (
     <TournamentsWrapper>
       <Title>LIVE BROADCASTS</Title>
@@ -146,8 +162,16 @@ function TournamentsList({ onSelect }) {
           onChange={e => setSearchTerm(e.target.value)} 
           placeholder="Search tournaments..."
         />
-
         <SearchButton onClick={handleSearch}>Search</SearchButton>
+        
+        <SearchInput
+          value={customUrl}
+          onChange={handleCustomUrlChange}
+          placeholder="Enter custom Lichess URL..."
+        />
+        <SearchButton onClick={onSelectTournament}>
+          Go
+        </SearchButton>
       </SearchWrapper>
       <Button 
           onClick={() => {
