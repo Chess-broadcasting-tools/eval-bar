@@ -1,6 +1,6 @@
 .landing-container {
     color: #fff;
-    background-color: #1a1a1a;
+    background-color: #180f26;
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
     display: flex;
@@ -13,7 +13,7 @@ header {
 }
 
 header img {
-    max-width: 100%;
+    max-width: 30%;
     height: auto;
 }
 
@@ -25,6 +25,7 @@ main {
 .intro h1 {
     text-align: center;
     margin-bottom: 10px;
+    font-size: 2.5rem;
 }
 
 .intro p {
@@ -39,11 +40,16 @@ main {
 }
 
 .product {
-    background-color: #333;
+    background-color: #4f4ea092;
     padding: 20px;
     border-radius: 8px;
     text-decoration: none;
     color: inherit;
+}
+.product:hover {
+    transform : scale(1.1);
+    border : 5px solid #ffffff;
+    transition: all 0.2s ease-in-out;
 }
 
 .product img {
@@ -51,6 +57,7 @@ main {
     border-radius: 4px;
     margin-bottom: 10px;
 }
+
 
 footer {
     background-color: #333;

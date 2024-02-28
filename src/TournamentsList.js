@@ -28,6 +28,12 @@ const Card = styled.div`
     border-color: #4CAF50;
     transform: scale(1.05);
   }
+
+  .card-image {
+    width: 100%; // Adjust the width of the image
+    height: auto; // Maintain aspect ratio
+    margin-bottom: 1rem; // Add some space below the image
+  }
 `;
 
 const CardHeader = styled.div`
@@ -184,9 +190,10 @@ function TournamentsList({ onSelect }) {
       {filteredTournaments.map((tournament, index) => (
         (tournament.tour && tournament.rounds && tournament.rounds.length > 0) ? (
           <Card
-            key={tournament.tour.id}
-            selected={selectedTournaments.includes(tournament.tour.id)}
-          >
+  key={tournament.tour.id}
+  selected={selectedTournaments.includes(tournament.tour.id)}
+>
+  {tournament.image && <img className="card-image" src={tournament.image} alt="Tournament Image" />}
             <input 
               type="checkbox" 
               checked={checkedItems[tournament.tour.id]} 
