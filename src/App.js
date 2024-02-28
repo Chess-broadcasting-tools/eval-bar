@@ -5,6 +5,7 @@ import { Chess } from 'chess.js';
 import EvalBar from './evalbar';
 import TournamentsList from './TournamentsList';
 import CustomizeEvalBar from './CustomizeEvalBar';
+import css from './App.css'
 
 const theme = createTheme({
   palette: {
@@ -81,7 +82,7 @@ function App() {
 
   // New state variables for layout and isChromaBackground
   const [layout, setLayout] = useState('grid'); // Default layout is 'grid'
-  const [isChromaBackground, setIsChromaBackground] = useState(false);
+  const [isChromaBackground, setIsChromaBackground] = useState(true);
 
   const allGames = useRef("");
   const abortControllers = useRef({});
@@ -117,11 +118,12 @@ function App() {
   };
 
   const handleTournamentSelection = async (tournamentIds) => {
-    console.log("Received Tournament IDs:", tournamentIds);  
+    console.log("Received Tournament IDs:", tournamentIds);   
     setIsBroadcastLoaded(true);
+    // Set the chroma background to true as soon as tournament IDs are received
+    setIsChromaBackground(true);
     tournamentIds.forEach(tournamentId => startStreaming(tournamentId));
   };
-
   const startStreaming = async (tournamentId) => {
     if (abortControllers.current[tournamentId]) abortControllers.current[tournamentId].abort();
     abortControllers.current[tournamentId] = new AbortController();
