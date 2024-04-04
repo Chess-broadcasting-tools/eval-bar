@@ -1,7 +1,7 @@
 .eval-container {
   flex-wrap: wrap; /* Allow containers to wrap to the next line */
   padding: 3px; /* Adjusted padding for a more compact look */
-  width: 85%;  /* Each container occupies 25% of the parent container */
+  width: 90%;  /* Each container occupies 25% of the parent container */
   margin: 5px;  /* Adjusted for horizontal and vertical spacing */
   padding: 5px;
   background: linear-gradient(90deg, rgb(65, 63, 63) 50%, rgb(55, 53, 53) 89%);
