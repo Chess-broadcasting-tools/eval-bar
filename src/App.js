@@ -185,11 +185,44 @@ function App() {
         .join(' ')
         .replace(/ {.*?}/g, '')
         .trim();
-      const formatName = (name) => {
-        const cleanedName = name.replace(/\(.*?\)/g, '').trim();
-        const parts = cleanedName.split(' ').filter((part) => part.length > 3);
-        return parts.sort((a, b) => a.length - b.length)[0] || cleanedName.split(' ')[0];
-      };
+        const formatName = (name) => {
+          // Remove commas and other unwanted characters
+          const cleanedName = name.replace(/[,.;]/g, '').trim();
+          const parts = cleanedName.split(' ').filter(part => part.length > 0); // Filter empty parts
+        
+          // Special cases:
+          if (parts.includes("Praggnanandhaa")) { 
+            return "Pragg";
+          }
+          if (parts.includes("Praggnanandhaa,")) { 
+              return "Pragg";
+            }
+          if (parts.includes("Nepomniachtchi,")) { 
+              return "Nepo";
+            }
+            if (parts.includes("Nepomniachtchi")) { 
+              return "Nepo";
+            }
+          if (parts.includes("Warmerdam")) { 
+            return "Max";
+          }
+          if (parts.includes("Goryachkina,")) { 
+              return "Gorya";
+            }
+          if (parts.includes("Goryachkina")) { 
+              return "Gorya";
+            }
+          
+          // Find the shortest name
+          let shortestName = parts[0] || ""; // Initialize with empty string
+          for (let i = 1; i < parts.length; i++) {
+            if (parts[i].length < shortestName.length) {
+              shortestName = parts[i];
+            }
+          }
+        
+          return shortestName;
+        };
 
       let gameResult = null;
       const resultMatch = cleanedPgn.match(/(1-0|0-1|1\/2-1\/2)$/);
