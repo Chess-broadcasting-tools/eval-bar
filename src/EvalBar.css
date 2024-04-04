@@ -1,305 +1,92 @@
 .eval-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2px;
-  width: 27%;  /* Retained this width */
-  margin: 1.2% auto;  /* Adjusted for vertical spacing and centering */
-  background: rgb(124, 121, 121);
-background: linear-gradient(90deg, rgb(65, 63, 63) 50%, rgb(55, 53, 53) 89%);
-  border-radius: 0px;
-  border: 4px solid rgb(200,135,60);  
+  flex-wrap: wrap; /* Allow containers to wrap to the next line */
+  padding: 3px; /* Adjusted padding for a more compact look */
+  width: 85%;  /* Each container occupies 25% of the parent container */
+  margin: 5px;  /* Adjusted for horizontal and vertical spacing */
+  padding: 5px;
+  background: linear-gradient(90deg, rgb(65, 63, 63) 50%, rgb(55, 53, 53) 89%);
+  border-radius: 1px; /* Sharper borders */
   box-shadow: 0 4px 10px rgba(10, 9, 9, 0);
-  position: relative;
+  position: relative;/* Include padding and border in width calculation */
+  height:auto;
 }
+
 
 .evaluation-value {
   font-weight: bold;
-  color: white;
-  font-size: 0.1rem;  /* Decreased font size */
-  margin-top: 12px;  /* Moved below the player names */
-}
-
-.player-box {
-  display: flex;
-  flex-direction: column;
-  width: 10%;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 0px;
-  border-radius: 0px;
+  color: rgb(0, 0, 0);
+  font-size: 12px; /* Adjusted font size */
+  margin-top: 9px; /* Moved above the player names */
+  margin-bottom: 5px;
+  position: absolute; /* Position absolutely */
+  top: 53%; /* Align to the top */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 1; /* Ensure it's above bars */
 }
 
 .player-names {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 4px; /* Reduced margin for compactness */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .white-player, .black-player {
   flex: 1;
-  text-align: center;
-  padding: 2px 8px;  /* Adjusted padding for a sleeker design */
-}
-
-.white-player {
-  background-color: white;
-  color: black;
-}
-
-.black-player {
-  background-color: black;
-  color: white;
-}
-
-
-
-.player-names {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.eval-bars {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 15px;
-  background-color: #000000;
-  border-radius: 1px;
-  overflow: hidden;
-  margin-top: 5px;
-  margin-bottom:5px;
-}
-
-.white-bar {
-  position: absolute;
-  left: 0;
-  height: 100%; 
-  background-color: #ffffff;
-  transition: width 1.2s;
-}
-
-
-.evaluation-value {
-  font-size: 12px; /* reducing the font size */
-  margin-top: 5px; 
-  margin-bottom: 5px;
-}
-
-/* Additional styles for player names */
-.white-player {
-  background-color: #ecdab9;
-  color: black;
-  padding: 2px 10px;
-  border-radius: 5px;
-}
-
-.black-player {
-  background-color: #ae8a69;
-  color: rgb(0, 0, 0);
-  padding: 2px 10px;
-  border-radius: 5px;
-  transition: width 1.2s;
-}
-
-.eval-container {
-  padding: 5px; /* Reduced padding for a more compact look */
-  border-radius: 4px; /* Sharper borders */
-}
-
-.evaluation-value {
-  font-size: 12px; /* Adjusted font size */
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.player-names {
-  margin-bottom: 4px; /* Reduced margin for compactness */
-}
-
-.white-player, .black-player {
   padding: 2px 8px; /* Adjusted padding for sleeker design */
   border-radius: 3px; /* Sharper borders */
   font-size: 12px; /* Smaller font size for sleeker design */
 }
 
-.eval-bars {
-  height: 20px; /* Reduced height for sleeker design */
-  border-radius: 15px; /* Sharper borders */
-}
-
-.zero-marker {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.zero-marker::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 3px;
-  height: 100%;
-  background-color: red;
-}
-.eval-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2px;
-  width: 27%;  /* Retained this width */
-  margin: 1.2% auto;  /* Adjusted for vertical spacing and centering */
-  background: rgb(124, 121, 121);
-background: linear-gradient(90deg, rgb(65, 63, 63) 50%, rgb(55, 53, 53) 89%);
-  border-radius: 0px;
-  border: 4px solid rgb(200,135,60);  
-  box-shadow: 0 4px 10px rgba(10, 9, 9, 0);
-  position: relative;
-}
-
-.evaluation-value {
-  font-weight: bold;
-  color: white;
-  font-size: 0.1rem;  /* Decreased font size */
-  margin-top: 12px;  /* Moved below the player names */
-}
-
-.player-box {
-  display: flex;
-  flex-direction: column;
-  width: 10%;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 0px;
-  border-radius: 0px;
-}
-
-.player-names {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.white-player, .black-player {
-  flex: 1;
-  text-align: center;
-  padding: 2px 8px;  /* Adjusted padding for a sleeker design */
-}
-
 .white-player {
-  background-color: white;
+  background-color: #ecdab900;
   color: black;
+  text-align: left;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  
 }
 
 .black-player {
-  background-color: black;
-  color: white;
-}
-
-
-
-.player-names {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 5px;
+  background-color: #ae8a6900;
+  color: rgb(0, 0, 0);
+  text-align: right;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .eval-bars {
   position: relative;
   display: flex;
-  width: 100%;
-  height: 15px;
+  width: 100%; /* Change this to the desired width for the bars */
+  height: 11px;
   background-color: #000000;
-  border-radius: 1px;
+  border-radius: 20px;
   overflow: hidden;
   margin-top: 5px;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 }
 
 .white-bar {
   position: absolute;
   left: 0;
-  height: 100%; 
+  height: 100%;
   background-color: #ffffff;
   transition: width 1.2s;
 }
 
-
-.evaluation-value {
-  font-size: 12px; /* reducing the font size */
-  margin-top: 5px; 
-  margin-bottom: 5px;
-}
-
-/* Additional styles for player names */
-.white-player {
-  background-color: #ecdab9;
-  color: black;
-  padding: 2px 10px;
-  border-radius: 5px;
-}
-
-.black-player {
-  background-color: #ae8a69;
-  color: rgb(0, 0, 0);
-  padding: 2px 10px;
-  border-radius: 5px;
-  transition: width 1.2s;
-}
-
-.eval-container {
-  padding: 5px; /* Reduced padding for a more compact look */
-  border-radius: 4px; /* Sharper borders */
-}
-
-.evaluation-value {
-  font-size: 12px; /* Adjusted font size */
-  margin-top: 5px;
-  margin-bottom: 5px;
+.result-value {
   font-weight: bold;
+  color: rgb(255, 255, 255); /* Set the text color to white for result */
+  font-size: 18px;
+  top: 100%; /* Align to the top */
+  left: 15%;
+  background-size: 300px;
 }
 
-.player-names {
-  margin-bottom: 4px; /* Reduced margin for compactness */
-}
-
-.white-player, .black-player {
-  padding: 2px 8px; /* Adjusted padding for sleeker design */
-  border-radius: 3px; /* Sharper borders */
-  font-size: 12px; /* Smaller font size for sleeker design */
-}
-
-.eval-bars {
-  height: 20px; /* Reduced height for sleeker design */
-  border-radius: 15px; /* Sharper borders */
-}
-
-.zero-marker {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.zero-marker::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 3px;
-  height: 100%;
-  background-color: red;
-}
-@keyframes blink {
-  0%, 100% { border-color: red; }
-  50% { border-color: white; }
-}
-
-.blink-border {
-  animation: blink 1s linear infinite;
+.evaluation-value {
+  font-weight: bold;
+  color: black; /* Set the text color to black for evaluation */
+  font-size: 18px;
 }
 
