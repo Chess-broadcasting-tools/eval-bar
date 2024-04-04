@@ -41,6 +41,9 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
         if (parts.includes("Goryachkina")) { 
             return "Gorya";
           }
+        if (parts.includes("Gukesh")) { 
+            return "Gukesh";
+          }
         
         // Find the shortest name
         let shortestName = parts[0] || ""; // Initialize with empty string
