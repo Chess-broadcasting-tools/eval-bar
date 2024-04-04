@@ -5,7 +5,7 @@ import { Chess } from 'chess.js';
 import EvalBar from './evalbar';
 import TournamentsList from './TournamentsList';
 import CustomizeEvalBar from './CustomizeEvalBar';
-import css from './App.css'
+import css from './App.css';
 
 const theme = createTheme({
   palette: {
@@ -20,8 +20,8 @@ const theme = createTheme({
       main: '#b9bbce',
     },
     tertiary: {
-      main: '#ADD8E6'
-    }
+      main: '#ADD8E6',
+    },
   },
   fontFamily: [
     '-apple-system',
@@ -34,26 +34,26 @@ const theme = createTheme({
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
-   ].join(','),
+  ].join(','),
 });
 
 const GameCard = ({ game, onClick, isSelected }) => {
-  const variant = isSelected ? "contained" : "outlined";
-  const color = isSelected ? "tertiary" : "secondary";
-  const boxShadow = isSelected ? '0px  0px  12px  2px rgba(252,188,213,0.6)' : 'none';
+  const variant = isSelected ? 'contained' : 'outlined';
+  const color = isSelected ? 'tertiary' : 'secondary';
+  const boxShadow = isSelected ? '0px 0px 12px 2px rgba(252,188,213,0.6)' : 'none';
 
   const buttonStyle = {
     margin: '2px',
     padding: '6px',
     fontSize: '0.8em',
     fontWeight: 'bold',
-    boxShadow
+    boxShadow,
   };
 
   return (
-    <Button  
-      variant={variant}  
-      color={color}  
+    <Button
+      variant={variant}
+      color={color}
       style={buttonStyle}
       onClick={onClick}
     >
@@ -63,38 +63,33 @@ const GameCard = ({ game, onClick, isSelected }) => {
 };
 
 function App() {
-  // Existing state variables
   const [broadcastIDs, setBroadcastIDs] = useState([]);
   const [isBroadcastLoaded, setIsBroadcastLoaded] = useState(false);
   const [links, setLinks] = useState([]);
   const [availableGames, setAvailableGames] = useState([]);
   const [selectedGames, setSelectedGames] = useState([]);
   const [customStyles, setCustomStyles] = useState({
-    evalContainerBg: '#7c7979',
-    blackBarColor: '#000000',
+    evalContainerBg: '#000000',
+    blackBarColor: '#E79D29',
     whiteBarColor: '#ffffff',
-    whitePlayerColor: '#ecdab9',
-    blackPlayerColor: '#ae8a69',
-    whitePlayerNameColor: '#000000',
-    blackPlayerNameColor: '#FFFFFF',
-    evalContainerBorderColor: '#000000',   
+    whitePlayerColor: 'Transparent',
+    blackPlayerColor: 'Transparent',
+    whitePlayerNameColor: '#FFFFFF',
+    blackPlayerNameColor: '#E79D29',
+    evalContainerBorderColor: '#FFFFFF',
   });
 
-  // New state variables for layout and isChromaBackground
-  const [layout, setLayout] = useState('grid'); // Default layout is 'grid'
+  const [layout, setLayout] = useState('grid');
   const [isChromaBackground, setIsChromaBackground] = useState(true);
 
-  const allGames = useRef("");
+  const allGames = useRef('');
   const abortControllers = useRef({});
 
   const fetchEvaluation = async (fen) => {
-    // Construct the query parameters
-    const depth =  13; // You can adjust the depth as needed
-    const mode = 'eval'; // The mode for evaluation
-  
-    // Construct the full URL with the FEN, depth, and mode parameters
+    const depth = 13;
+    const mode = 'eval';
     const endpoint = `https://stockfish.online/api/stockfish.php?fen=${encodeURIComponent(fen)}&depth=${depth}&mode=${mode}`;
-  
+
     try {
       const response = await fetch(endpoint, { method: 'GET', mode: 'cors' });
       if (!response.ok) {
@@ -102,35 +97,35 @@ function App() {
       }
       const data = await response.json();
       if (data.success) {
-        // Extract the evaluation value from the response
         const evaluation = data.data.match(/Total evaluation: (-?\d+\.\d+)/)[1];
-        return { evaluation }; // Return the evaluation as a number
+        return { evaluation };
       } else {
         throw new Error('API request failed');
       }
     } catch (error) {
       console.error('Error fetching evaluation:', error);
-      throw error; // Rethrow the error to handle it in the calling function
+      throw error;
     }
   };
+
   const handleRemoveLink = (index) => {
-    setLinks(prevLinks => prevLinks.filter((link, i) => i !== index));
+    setLinks((prevLinks) => prevLinks.filter((link, i) => i !== index));
   };
 
   const handleTournamentSelection = async (tournamentIds) => {
-    console.log("Received Tournament IDs:", tournamentIds);   
+    console.log('Received Tournament IDs:', tournamentIds);
     setIsBroadcastLoaded(true);
-    // Set the chroma background to true as soon as tournament IDs are received
     setIsChromaBackground(true);
-    tournamentIds.forEach(tournamentId => startStreaming(tournamentId));
+    tournamentIds.forEach((tournamentId) => startStreaming(tournamentId));
   };
+
   const startStreaming = async (tournamentId) => {
     if (abortControllers.current[tournamentId]) abortControllers.current[tournamentId].abort();
     abortControllers.current[tournamentId] = new AbortController();
-   
+
     const streamURL = `https://lichess.org/api/stream/broadcast/round/${tournamentId}.pgn`;
     const response = await fetch(streamURL, { signal: abortControllers.current[tournamentId].signal });
-    console.log("Stream URL:", streamURL);
+    console.log('Stream URL:', streamURL);
     const reader = response.body.getReader();
     document.body.classList.add('chroma-background');
 
@@ -141,14 +136,14 @@ function App() {
       allGames.current += new TextDecoder().decode(value);
       updateEvaluations();
       fetchAvailableGames();
-      setTimeout(processStream,  10);
+      setTimeout(processStream, 10);
     };
     processStream();
   };
 
   const fetchAvailableGames = () => {
-    const games = allGames.current.split("\n\n\n");
-    const gameOptions = games.map(game => {
+    const games = allGames.current.split('\n\n\n');
+    const gameOptions = games.map((game) => {
       const whiteMatch = game.match(/\[White "(.*?)"\]/);
       const blackMatch = game.match(/\[Black "(.*?)"\]/);
       return whiteMatch && blackMatch ? `${whiteMatch[1]} - ${blackMatch[1]}` : null;
@@ -158,17 +153,17 @@ function App() {
 
   const handleGameSelection = (game) => {
     if (selectedGames.includes(game)) {
-        setSelectedGames(prevGames => prevGames.filter(g => g !== game));
+      setSelectedGames((prevGames) => prevGames.filter((g) => g !== game));
     } else {
-        setSelectedGames(prevGames => [...prevGames, game]);
+      setSelectedGames((prevGames) => [...prevGames, game]);
     }
   };
 
   const addSelectedGames = () => {
     for (let game of selectedGames) {
       const [whitePlayer, blackPlayer] = game.split(' - ');
-      if (!links.some(link => link.whitePlayer === whitePlayer && link.blackPlayer === blackPlayer)) {
-        setLinks(prevLinks => [...prevLinks, { evaluation: null, whitePlayer, blackPlayer, error: null, lastFEN: '' }]);
+      if (!links.some((link) => link.whitePlayer === whitePlayer && link.blackPlayer === blackPlayer)) {
+        setLinks((prevLinks) => [...prevLinks, { evaluation: null, whitePlayer, blackPlayer, error: null, lastFEN: '' }]);
         updateEvaluationsForLink({ whitePlayer, blackPlayer });
       }
     }
@@ -186,23 +181,23 @@ function App() {
     if (specificGamePgn) {
       const cleanedPgn = specificGamePgn
         .split('\n')
-        .filter(line => !line.startsWith('[') && !line.includes('[Event'))
+        .filter((line) => !line.startsWith('[') && !line.includes('[Event'))
         .join(' ')
         .replace(/ {.*?}/g, '')
         .trim();
       const formatName = (name) => {
         const cleanedName = name.replace(/\(.*?\)/g, '').trim();
-        const parts = cleanedName.split(' ').filter(part => part.length >  3);
+        const parts = cleanedName.split(' ').filter((part) => part.length > 3);
         return parts.sort((a, b) => a.length - b.length)[0] || cleanedName.split(' ')[0];
       };
 
-      let gameResult = null;  
+      let gameResult = null;
       const resultMatch = cleanedPgn.match(/(1-0|0-1|1\/2-1\/2)$/);
       if (resultMatch) {
         const result = resultMatch[1];
-        if (result === "1-0") gameResult = `Bravo!! ${formatName(link.whitePlayer)}!`;
-        else if (result === "0-1") gameResult = `Bravo!! ${formatName(link.blackPlayer)}!`;
-        else if (result === "1/2-1/2") gameResult = "It's a draw! 🤝";
+        if (result === '1-0') gameResult = `Bravo!! ${formatName(link.whitePlayer)}!`;
+        else if (result === '0-1') gameResult = `Bravo!! ${formatName(link.blackPlayer)}!`;
+        else if (result === '1/2-1/2') gameResult = 'It\'s a draw! 🤝';
       }
 
       const chess = new Chess();
@@ -212,9 +207,9 @@ function App() {
 
         if (currentFEN !== link.lastFEN || gameResult !== link.result) {
           const evalData = await fetchEvaluation(currentFEN);
-          setLinks(prevLinks => {
+          setLinks((prevLinks) => {
             const updatedLinks = [...prevLinks];
-            const idx = updatedLinks.findIndex(l => l.whitePlayer === link.whitePlayer && l.blackPlayer === link.blackPlayer);
+            const idx = updatedLinks.findIndex((l) => l.whitePlayer === link.whitePlayer && l.blackPlayer === link.blackPlayer);
             if (idx !== -1) {
               updatedLinks[idx] = {
                 ...link,
@@ -227,7 +222,7 @@ function App() {
           });
         }
       } catch (error) {
-        console.error("Error loading PGN:", error);
+        console.error('Error loading PGN:', error);
       }
     }
   };
@@ -235,6 +230,7 @@ function App() {
   const updateEvaluations = async () => {
     for (let link of links) {
       await updateEvaluationsForLink(link);
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   };
 
@@ -242,22 +238,32 @@ function App() {
     const stateData = {
       broadcastIDs,
       selectedGames,
-      customStyles
+      customStyles,
     };
 
     const serializedData = encodeURIComponent(JSON.stringify(stateData));
     navigator.clipboard.writeText(`${window.location.origin}/broadcast/${serializedData}`)
       .then(() => alert('Link copied to clipboard!'))
-      .catch(err => console.error('Failed to copy link:', err));
+      .catch((err) => console.error('Failed to copy link:', err));
   };
+
   useEffect(() => {
     if (links.length) {
       const interval = setInterval(() => {
         updateEvaluations();
-      },  2000); // Check every  2 seconds
-      return () => clearInterval(interval);  // Cleanup on component unmount or if links change
+      }, 2000);
+      return () => clearInterval(interval);
     }
   }, [links]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const tournamentId = queryParams.get('tournamentId');
+
+    if (tournamentId) {
+      handleTournamentSelection([tournamentId]);
+    }
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -270,7 +276,7 @@ function App() {
         setSelectedGames(selectedGames);
         setCustomStyles(customStyles);
       } catch (error) {
-        console.error("Error parsing state from URL", error);
+        console.error('Error parsing state from URL', error);
       }
     }
   }, []);
@@ -279,12 +285,12 @@ function App() {
     <ThemeProvider theme={theme}>
       <Container maxWidth="md" className={isChromaBackground ? 'chroma-background' : 'dark-background'}>
         <Toolbar>
-          <Box style={{ display: 'flex', justifyContent: 'center', flexGrow:  1.5 }}>
+          <Box style={{ display: 'flex', justifyContent: 'center', flexGrow: 1.5 }}>
             <img src="https://i.imgur.com/z2fbMtT.png" alt="ChessBase India Logo" style={{ height: '100px', marginTop: '20px' }} />
           </Box>
         </Toolbar>
         {isBroadcastLoaded ? (
-          <Box mt={4} px={3} sx={{ backgroundColor: 'rgba(50,  67,  100,  1)', padding:  2, borderRadius:  2, marginBottom:  2 }}>
+          <Box mt={4} px={3} sx={{ backgroundColor: 'rgba(50, 67, 100, 1)', padding: 2, borderRadius: 2, marginBottom: 2 }}>
             {availableGames.map((game, index) => (
               <GameCard key={index} game={game} onClick={() => handleGameSelection(game)} isSelected={selectedGames.includes(game)} />
             ))}
@@ -298,25 +304,26 @@ function App() {
             <TournamentsList onSelect={handleTournamentSelection} />
           </div>
         )}
-        <Box mt={4} px={3} className="eval-bars-container">
-          {links.map((link, index) => (
-            <Box key={index} display="flex" flexDirection="row" alignItems="flex-start" justifyContent="center" style={{ marginBottom: '0px' }}>
-              <Button className="close-button" onClick={() => handleRemoveLink(index)}>Close</Button>
-              <EvalBar
-                evaluation={link.evaluation}
-                whitePlayer={link.whitePlayer}
-                blackPlayer={link.blackPlayer}
-                result={link.result}
-                layout={layout}
-                customStyles={customStyles}
-              />
-            </Box>
-          ))}
-        </Box>
-      </Container>
+        </Container>
+        
+<Box mt={5} px={4} className="eval-bars-container" style={{ width: '100%' }}>
+  <Box display="flex" flexWrap="wrap" justifyContent="center" width="100%">
+    {links.map((link, index) => (
+      <Box key={index} style={{ flex: '0 0 14%', maxWidth: '25%' }}>
+        <EvalBar
+          evaluation={link.evaluation}
+          whitePlayer={link.whitePlayer}
+          blackPlayer={link.blackPlayer}
+          result={link.result}
+          layout={layout}
+          customStyles={customStyles}
+        />
+      </Box>
+    ))}
+  </Box>
+</Box>
     </ThemeProvider>
   );
 }
 
 export default App;
-
