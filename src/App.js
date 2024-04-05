@@ -86,25 +86,13 @@ function App() {
   const abortControllers = useRef({});
 
   const fetchEvaluation = async (fen) => {
-  const endpoint = `http://stockfish.broadcastsofcbi.live/evaluate?fen=${encodeURIComponent(fen)}`;
-
-  try {
+    const endpoint = `https://stockfish.broadcastsofcbi.live/evaluate?fen=${encodeURIComponent(fen)}`;
     const response = await fetch(endpoint, { method: 'GET', mode: 'cors' });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const data = await response.json();
-    if (data.hasOwnProperty('evaluation')) {
-      const evaluation = data.evaluation;
-      return { evaluation };
-    } else {
-      throw new Error('Evaluation not found in API response');
-    }
-  } catch (error) {
-    console.error('Error fetching evaluation:', error);
-    throw error;
-  }
-};
+    return await response.json();
+  };
 
   const handleRemoveLink = (index) => {
     setLinks((prevLinks) => prevLinks.filter((link, i) => i !== index));
