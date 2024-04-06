@@ -198,6 +198,9 @@ function App() {
           if (parts.includes("Goryachkina")) { 
               return "Gorya";
             }
+          if (parts.includes("Gukesh")) { 
+            return "Gukesh";
+          }
           
           // Find the shortest name
           let shortestName = parts[0] || ""; // Initialize with empty string
