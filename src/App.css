@@ -55,3 +55,9 @@ body.chroma-background {
 .button:hover {
   transform: var(--button-hover-transform);
 }
+
+.eval-bars-container {
+  width: 100%;
+  padding-bottom: 30px; /* Adjust this value as needed */
+  box-sizing: border-box; /* Include padding in the element's total height/width */
+}
