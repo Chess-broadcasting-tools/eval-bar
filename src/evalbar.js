@@ -64,8 +64,8 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
         return evalValue;
     };
 
-    const displayResult = formatEvaluation(result || evaluation);
-    const evalDisplayClass = result ? "result" : "evaluation-value";
+    const displayResult = result !== null ? formatEvaluation(result) : formatEvaluation(evaluation);
+    const evalDisplayClass = result !== null ? "result" : "evaluation-value";
 
     return (
         <Box className={`eval-container ${layout} ${alert ? 'blink-border' : ''}`} 
