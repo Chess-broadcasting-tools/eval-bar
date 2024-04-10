@@ -5,7 +5,7 @@ import blunderSound from './blunder-sound.mp3';
 
 function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customStyles, alert, onBlunder }) {
   const prevEvaluationRef = useRef(null);
-  const prevResultRef = useRef(null);
+  const prevResultRef = useRef(undefined);
   const blunderSoundRef = useRef(null);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
       const isBlunder = (prevEval, currentEval) => {
         if (prevEval >= -4 && prevEval <= 4) {
           if (
-            (prevEval > 0 && currentEval <= 0) ||
-            (prevEval < 0 && currentEval >= 0) ||
+            (prevEval > 0 && currentEval <= 0 && currentEval !== 0) ||
+            (prevEval < 0 && currentEval >= 0 && currentEval !== 0) ||
             Math.abs(currentEval - prevEval) >= 0.6
           ) {
             return true;
@@ -34,7 +34,8 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
   }, [evaluation, onBlunder]);
 
   useEffect(() => {
-    if (prevResultRef.current !== result) {
+    if (prevResultRef.current !== undefined && prevResultRef.current !== result && result !== null) {
+      blunderSoundRef.current.volume = 0.6; // Set volume to 60%
       blunderSoundRef.current.play();
       onBlunder();
     }
