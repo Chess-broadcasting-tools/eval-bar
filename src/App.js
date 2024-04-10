@@ -6,6 +6,8 @@ import EvalBar from './evalbar';
 import TournamentsList from './TournamentsList';
 import CustomizeEvalBar from './CustomizeEvalBar';
 import css from './App.css';
+import blunderSound from './blunder-sound.mp3';
+
 
 const theme = createTheme({
   palette: {
@@ -68,6 +70,8 @@ function App() {
   const [links, setLinks] = useState([]);
   const [availableGames, setAvailableGames] = useState([]);
   const [selectedGames, setSelectedGames] = useState([]);
+  const [blunderAlertLinks, setBlunderAlertLinks] = useState([]);
+  const blunderSoundRef = useRef(null);
   const [customStyles, setCustomStyles] = useState({
     evalContainerBg: '#000000',
     blackBarColor: '#E79D29',
@@ -84,6 +88,21 @@ function App() {
 
   const allGames = useRef('');
   const abortControllers = useRef({});
+
+  const handleBlunder = (linkIndex) => {
+    setBlunderAlertLinks((prevLinks) => [...prevLinks, linkIndex]);
+    blunderSoundRef.current.play();
+
+    setTimeout(() => {
+      setBlunderAlertLinks((prevLinks) => prevLinks.filter((index) => index !== linkIndex));
+    }, 12000);
+  };
+  const handleDemoBlunder = () => {
+    if (links.length > 0) {
+      const randomLinkIndex = Math.floor(Math.random() * links.length);
+      handleBlunder(randomLinkIndex);
+    }
+  };
 
   const fetchEvaluation = async (fen) => {
     const endpoint = `https://stockfish.broadcastsofcbi.live/evaluate?fen=${encodeURIComponent(fen)}`;
@@ -319,6 +338,9 @@ function App() {
             <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={addSelectedGames}>
               Add Selected Games Bar
             </Button>
+            <Button variant="contained" color="secondary" style={{ marginTop: '10px' }} onClick={handleDemoBlunder}>
+          Demo Blunder
+        </Button>
             <CustomizeEvalBar customStyles={customStyles} setCustomStyles={setCustomStyles} />
           </Box>
         ) : (
@@ -328,22 +350,25 @@ function App() {
         )}
         </Container>
         
-<Box mt={5} px={4} className="eval-bars-container" style={{ width: '100%' }}>
-  <Box display="flex" flexWrap="wrap" justifyContent="center" width="100%">
-    {links.map((link, index) => (
-      <Box key={index} style={{ flex: '0 0 14%', maxWidth: '25%' }}>
-        <EvalBar
-          evaluation={link.evaluation}
-          whitePlayer={link.whitePlayer}
-          blackPlayer={link.blackPlayer}
-          result={link.result}
-          layout={layout}
-          customStyles={customStyles}
-        />
+        <Box mt={5} px={4} className="eval-bars-container" style={{ width: '100%' }}>
+        <Box display="flex" flexWrap="wrap" justifyContent="center" width="100%">
+          {links.map((link, index) => (
+            <Box key={index} style={{ flex: '0 0 14%', maxWidth: '25%' }}>
+              <EvalBar
+                evaluation={link.evaluation}
+                whitePlayer={link.whitePlayer}
+                blackPlayer={link.blackPlayer}
+                result={link.result}
+                layout={layout}
+                customStyles={customStyles}
+                alert={blunderAlertLinks.includes(index)}
+                onBlunder={() => handleBlunder(index)}
+              />
+            </Box>
+          ))}
+        </Box>
       </Box>
-    ))}
-  </Box>
-</Box>
+      <audio ref={blunderSoundRef} src={blunderSound} />
     </ThemeProvider>
   );
 }
