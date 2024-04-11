@@ -135,9 +135,22 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
         </Typography>
       </Box>
 
-      <Typography variant="h7" className={evalDisplayClass} style={{ marginTop: '5px', marginBottom: '5px', fontSize: '18px', fontWeight: 'bold', position: 'absolute', zIndex: 1 }}>
-        {displayResult}
-      </Typography>
+      <Typography
+  variant="h7"
+  className={evalDisplayClass}
+  style={{
+    marginTop: '5px',
+    marginBottom: '5px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    position: 'absolute',
+    zIndex: 1,
+    left: '50%',
+    transform: result !== null ? 'translateX(calc(-50% + 0px))' : 'translateX(-50%)',
+  }}
+>
+  {displayResult}
+</Typography>
 
       {!result && (
         <Box className="eval-bars" style={{ height: '30px', borderRadius: '15px', background: customStyles.blackBarColor, overflow: 'hidden', margin: '5px 0', position: 'relative', zIndex: 0 }}>
