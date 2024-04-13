@@ -236,9 +236,9 @@ function App() {
       const resultMatch = cleanedPgn.match(/(1-0|0-1|1\/2-1\/2)$/);
       if (resultMatch) {
         const result = resultMatch[1];
-        if (result === '1-0') gameResult = `Bravo!! ${formatName(link.whitePlayer)}!`;
-        else if (result === '0-1') gameResult = `Bravo!! ${formatName(link.blackPlayer)}!`;
-        else if (result === '1/2-1/2') gameResult = 'It\'s a draw! 🤝';
+        if (result === '1-0') gameResult = '1-0';
+        else if (result === '0-1') gameResult = '0-1';
+        else if (result === '1/2-1/2') gameResult = 'Draw';
       }
 
       const chess = new Chess();
