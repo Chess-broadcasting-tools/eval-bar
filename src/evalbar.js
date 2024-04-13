@@ -136,7 +136,7 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
   className={evalDisplayClass}
   style={{
     marginTop: '7px',
-    marginBottom: '5px',
+    marginBottom: '7px',
     fontSize: '23px',
     fontWeight: 'bold',
     position: 'absolute',
