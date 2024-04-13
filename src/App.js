@@ -95,7 +95,7 @@ function App() {
 
     setTimeout(() => {
       setBlunderAlertLinks((prevLinks) => prevLinks.filter((index) => index !== linkIndex));
-    }, 12000);
+    }, 40000);
   };
   const handleDemoBlunder = () => {
     if (links.length > 0) {
