@@ -122,6 +122,8 @@ function EvalBar({
       style={{
         background: customStyles.evalContainerBg,
         border: `1px solid ${customStyles.evalContainerBorderColor}`,
+        // rounded corners
+        borderRadius: "6px",
       }}
     >
       <Box
@@ -205,8 +207,8 @@ function EvalBar({
           className="last-move"
           style={{
             position: "absolute",
-            top: "0",
-            left: "0",
+            top: "1px",
+            left: "2px",
             fontSize: "12px",
             color: customStyles.lastMoveColor,
           }}
