@@ -135,7 +135,6 @@ function EvalBar({
         // rounded corners
         borderRadius: "6px",
       }}
-      onClick={() => onBlunderFunction()}
     >
       <Box
         className="player-names"
