@@ -20,6 +20,14 @@ function EvalBar({
 
   const [displayBlunder, setDisplayBlunder] = React.useState(false);
 
+  const onBlunderFunction = () => {
+    onBlunder();
+    setDisplayBlunder(true)
+    setTimeout(() => {
+      setDisplayBlunder(false)
+    }, 10000);
+  }
+
   useEffect(() => {
     if (prevEvaluationRef.current !== null) {
       const prevEval = prevEvaluationRef.current;
@@ -35,11 +43,7 @@ function EvalBar({
       };
 
       if (isBlunder(prevEval, currentEval)) {
-        onBlunder();
-        setDisplayBlunder(true)
-        setTimeout(() => {
-          setDisplayBlunder(false)
-        }, 10000);
+        onBlunderFunction()
       }
     }
     prevEvaluationRef.current = evaluation;
@@ -131,6 +135,7 @@ function EvalBar({
         // rounded corners
         borderRadius: "6px",
       }}
+      onClick={() => onBlunderFunction()}
     >
       <Box
         className="player-names"
@@ -225,14 +230,14 @@ function EvalBar({
       {displayBlunder && (
           <div style={{
             borderRadius: "50%",
-            padding: "5px",
+            padding: "2px",
             background: 'red',
             position: "absolute",
-            top: "-15px",
-            right: "-15px",
+            top: "0px",
+            right: "0px",
             // bouncing animation for 10 seconds
             animation: "pulse 1.5s infinite",
-            
+            fontSize: "12px",
           }}>??</div>
       )}
     </Box>
