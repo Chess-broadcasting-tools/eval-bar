@@ -1,9 +1,19 @@
-import React, { useEffect, useRef } from 'react';
-import { Box, Typography } from '@mui/material';
-import './EvalBar.css';
-import blunderSound from './blunder-sound.mp3';
+import React, { useEffect, useRef } from "react";
+import { Box, Typography } from "@mui/material";
+import "./EvalBar.css";
+import blunderSound from "./blunder-sound.mp3";
 
-function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customStyles, alert, onBlunder }) {
+function EvalBar({
+  evaluation,
+  whitePlayer,
+  blackPlayer,
+  result,
+  layout,
+  customStyles,
+  alert,
+  onBlunder,
+  lastFEN,
+}) {
   const prevEvaluationRef = useRef(null);
   const prevResultRef = useRef(undefined);
   const blunderSoundRef = useRef(null);
@@ -30,7 +40,11 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
   }, [evaluation, onBlunder]);
 
   useEffect(() => {
-    if (prevResultRef.current !== undefined && prevResultRef.current !== result && result !== null) {
+    if (
+      prevResultRef.current !== undefined &&
+      prevResultRef.current !== result &&
+      result !== null
+    ) {
       blunderSoundRef.current.volume = 0.8; // Set volume to 60%
       blunderSoundRef.current.play();
       onBlunder();
@@ -43,43 +57,43 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
   };
 
   const getWhiteBarWidth = () => {
-    if (evaluation >= 99) return '100%';
-    if (evaluation >= 4) return '90%';
-    if (evaluation <= -4) return '10%';
+    if (evaluation >= 99) return "100%";
+    if (evaluation >= 4) return "90%";
+    if (evaluation <= -4) return "10%";
     return `${50 + getBarSegment(evaluation) * 7.5}%`;
   };
 
   const formatName = (name) => {
     // Remove commas and other unwanted characters
-    const cleanedName = name.replace(/[,.;]/g, '').trim();
-    const parts = cleanedName.split(' ').filter(part => part.length > 0); // Filter empty parts
-  
+    const cleanedName = name.replace(/[,.;]/g, "").trim();
+    const parts = cleanedName.split(" ").filter((part) => part.length > 0); // Filter empty parts
+
     // Special cases:
-    if (parts.includes("Praggnanandhaa")) { 
+    if (parts.includes("Praggnanandhaa")) {
       return "Pragg";
     }
-    if (parts.includes("Praggnanandhaa,")) { 
+    if (parts.includes("Praggnanandhaa,")) {
       return "Pragg";
     }
-    if (parts.includes("Nepomniachtchi,")) { 
+    if (parts.includes("Nepomniachtchi,")) {
       return "Nepo";
     }
-    if (parts.includes("Nepomniachtchi")) { 
+    if (parts.includes("Nepomniachtchi")) {
       return "Nepo";
     }
-    if (parts.includes("Warmerdam")) { 
+    if (parts.includes("Warmerdam")) {
       return "Max";
     }
-    if (parts.includes("Goryachkina,")) { 
+    if (parts.includes("Goryachkina,")) {
       return "Gorya";
     }
-    if (parts.includes("Goryachkina")) { 
+    if (parts.includes("Goryachkina")) {
       return "Gorya";
     }
-    if (parts.includes("Gukesh")) { 
+    if (parts.includes("Gukesh")) {
       return "Gukesh";
     }
-    
+
     // Find the shortest name
     let shortestName = parts[0] || ""; // Initialize with empty string
     for (let i = 1; i < parts.length; i++) {
@@ -87,10 +101,10 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
         shortestName = parts[i];
       }
     }
-  
+
     return shortestName;
   };
-  
+
   const formatEvaluation = (evalValue) => {
     if (evalValue < -1000 || evalValue > 1000) {
       return "Checkmate";
@@ -98,33 +112,43 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
     return evalValue;
   };
 
-  const displayResult = result !== null ? formatEvaluation(result) : formatEvaluation(evaluation);
+  const displayResult =
+    result !== null ? formatEvaluation(result) : formatEvaluation(evaluation);
   const evalDisplayClass = result !== null ? "result" : "evaluation-value";
 
   return (
-    <Box className={`eval-container ${layout} ${alert ? 'blink-border' : ''}`} 
-         style={{ background: customStyles.evalContainerBg, border: `1px solid ${customStyles.evalContainerBorderColor}` }}>
-      <Box className="player-names" display="flex" justifyContent="space-between">
-        <Typography 
-          variant="h6" 
-          className="white-player" 
-          style={{ 
-            background: customStyles.whitePlayerColor, 
-            color: customStyles.whitePlayerNameColor, 
-            fontSize: '1.3rem',
-            padding: '1px 13px'
+    <Box
+      className={`eval-container ${layout} ${alert ? "blink-border" : ""}`}
+      style={{
+        background: customStyles.evalContainerBg,
+        border: `1px solid ${customStyles.evalContainerBorderColor}`,
+      }}
+    >
+      <Box
+        className="player-names"
+        display="flex"
+        justifyContent="space-between"
+      >
+        <Typography
+          variant="h6"
+          className="white-player"
+          style={{
+            background: customStyles.whitePlayerColor,
+            color: customStyles.whitePlayerNameColor,
+            fontSize: "1.3rem",
+            padding: "1px 13px",
           }}
         >
           <b>{formatName(whitePlayer)}</b>
         </Typography>
-        <Typography 
-          variant="h6" 
-          className="black-player" 
-          style={{ 
-            background: customStyles.blackPlayerColor, 
-            color: customStyles.blackPlayerNameColor, 
-            fontSize: '1.3rem',
-            padding: '1px 13px'
+        <Typography
+          variant="h6"
+          className="black-player"
+          style={{
+            background: customStyles.blackPlayerColor,
+            color: customStyles.blackPlayerNameColor,
+            fontSize: "1.3rem",
+            padding: "1px 13px",
           }}
         >
           <b>{formatName(blackPlayer)}</b>
@@ -132,31 +156,75 @@ function EvalBar({ evaluation, whitePlayer, blackPlayer, result, layout, customS
       </Box>
 
       <Typography
-  variant="h7"
-  className={evalDisplayClass}
-  style={{
-    marginTop: result !== null ? '7px' : '3px',
-    marginBottom: '5px',
-    fontSize: '23px',
-    fontWeight: 'bold',
-    position: 'absolute',
-    zIndex: 1,
-    left: '50%',
-    transform: result !== null ? 'translateX(calc(-50% + 0px))' : 'translateX(-50%)',
-  }}
->
-  {displayResult}
-</Typography>
+        variant="h7"
+        className={evalDisplayClass}
+        style={{
+          marginTop: result !== null ? "7px" : "3px",
+          marginBottom: "5px",
+          fontSize: "23px",
+          fontWeight: "bold",
+          position: "absolute",
+          zIndex: 1,
+          left: "50%",
+          transform:
+            result !== null
+              ? "translateX(calc(-50% + 0px))"
+              : "translateX(-50%)",
+        }}
+      >
+        {displayResult}
+      </Typography>
 
       {!result && (
-        <Box className="eval-bars" style={{ height: '30px', borderRadius: '15px', background: customStyles.blackBarColor, overflow: 'hidden', margin: '5px 0', position: 'relative', zIndex: 0 }}>
-          <Box className="white-bar" style={{ width: getWhiteBarWidth(), background: customStyles.whiteBarColor }}></Box>
+        <Box
+          className="eval-bars"
+          style={{
+            height: "30px",
+            borderRadius: "15px",
+            background: customStyles.blackBarColor,
+            overflow: "hidden",
+            margin: "5px 0",
+            position: "relative",
+            zIndex: 0,
+          }}
+        >
+          <Box
+            className="white-bar"
+            style={{
+              width: getWhiteBarWidth(),
+              background: customStyles.whiteBarColor,
+            }}
+          ></Box>
           <Box className="zero-marker"></Box>
         </Box>
       )}
       <audio ref={blunderSoundRef} src={blunderSound} />
+      {lastFEN && (
+        <Typography
+          variant="h7"
+          className="last-move"
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            fontSize: "12px",
+            color: customStyles.lastMoveColor,
+          }}
+        >
+          {getLastMove(lastFEN)}
+        </Typography>
+      )}
     </Box>
   );
+}
+
+
+// get the last move from FEN
+
+function getLastMove(fen) {
+  const parts = fen.split(" ");
+  if (parts.length < 4) return null;
+  return parts[parts.length - 1];
 }
 
 export default EvalBar;
