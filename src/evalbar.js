@@ -18,6 +18,8 @@ function EvalBar({
   const prevResultRef = useRef(undefined);
   const blunderSoundRef = useRef(null);
 
+  const [displayBlunder, setDisplayBlunder] = React.useState(false);
+
   useEffect(() => {
     if (prevEvaluationRef.current !== null) {
       const prevEval = prevEvaluationRef.current;
@@ -34,6 +36,10 @@ function EvalBar({
 
       if (isBlunder(prevEval, currentEval)) {
         onBlunder();
+        setDisplayBlunder(true)
+        setTimeout(() => {
+          setDisplayBlunder(false)
+        }, 10000);
       }
     }
     prevEvaluationRef.current = evaluation;
@@ -215,6 +221,19 @@ function EvalBar({
         >
           {getLastMove(lastFEN)}
         </Typography>
+      )}
+      {displayBlunder && (
+          <div style={{
+            borderRadius: "50%",
+            padding: "5px",
+            background: 'red',
+            position: "absolute",
+            top: "-15px",
+            right: "-15px",
+            // bouncing animation for 10 seconds
+            animation: "pulse 1.5s infinite",
+            
+          }}>??</div>
       )}
     </Box>
   );
