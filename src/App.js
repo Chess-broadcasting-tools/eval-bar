@@ -360,6 +360,7 @@ function App() {
                 blackPlayer={link.blackPlayer}
                 result={link.result}
                 layout={layout}
+                lastFEN={link.lastFEN}
                 customStyles={customStyles}
                 alert={blunderAlertLinks.includes(index)}
                 onBlunder={() => handleBlunder(index)}
@@ -372,5 +373,6 @@ function App() {
     </ThemeProvider>
   );
 }
+
 
 export default App;
