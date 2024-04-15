@@ -1,63 +1,75 @@
 body {
-  --primary-font: 'Roboto', sans-serif;
-  --transition-speed: 0.3s;
-  --primary-color: rgb(21, 185, 81);
-  background: rgb(47, 130, 88);
-  --container-bg: rgba(13, 255, 0, 0.9);
-  --border-color: #ccc;
-  --focus-color: #30517c;
-  --button-bg: #1a1a1a;
-  --button-hover-transform: translateY(-2px);
-  --box-shadow-light: 0px 3px 10px rgba(0, 0, 0, 0.1);
-  --box-shadow-dark: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    --primary-font: 'Roboto', sans-serif;
+    --transition-speed: 0.3s;
+    --primary-color: rgb(21, 185, 81);
+    background: rgb(47, 130, 88);
+    --container-bg: rgba(13, 255, 0, 0.9);
+    --border-color: #ccc;
+    --focus-color: #30517c;
+    --button-bg: #1a1a1a;
+    --button-hover-transform: translateY(-2px);
+    --box-shadow-light: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    --box-shadow-dark: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  font-family: var(--primary-font);
-  overflow: auto;
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: var(--primary-font);
+    overflow: auto;
 }
 
 * {
-  transition: all var(--transition-speed) ease;
+    transition: all var(--transition-speed) ease;
 }
 
 body.chroma-background {
-  background-color: var(--primary-color);
+    background-color: var(--primary-color);
 }
 
-
-
-
-
-
-
 .text-field {
-  border-radius: 5px;
-  border: 1px solid var(--border-color);
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
 }
 
 .text-field:focus {
-  border-color: var(--focus-color);
-  box-shadow: 0px 0px 5px rgba(26, 115, 232, 0.4);
+    border-color: var(--focus-color);
+    box-shadow: 0px 0px 5px rgba(26, 115, 232, 0.4);
 }
 
 .button {
-  border-radius: 20px;
-  padding: 10px 20px;
-  text-transform: uppercase;
-  box-shadow: var(--box-shadow-light);
-  transition: transform 0.2s ease;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    box-shadow: var(--box-shadow-light);
+    transition: transform 0.2s ease;
 }
 
 .button:hover {
-  transform: var(--button-hover-transform);
+    transform: var(--button-hover-transform);
 }
 
 .eval-bars-container {
-  width: 100%;
-  padding-bottom: 30px; /* Adjust this value as needed */
-  box-sizing: border-box; /* Include padding in the element's total height/width */
+    width: 100%;
+    padding-bottom: 30px;
+    /* Adjust this value as needed */
+    box-sizing: border-box;
+    /* Include padding in the element's total height/width */
+}
+
+
+/* pulse animation */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
