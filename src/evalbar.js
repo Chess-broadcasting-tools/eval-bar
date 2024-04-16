@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import "./EvalBar.css";
@@ -25,7 +26,7 @@ function EvalBar({
     setDisplayBlunder(true)
     setTimeout(() => {
       setDisplayBlunder(false)
-    }, 10000);
+    }, 60000);
   }
 
   useEffect(() => {
@@ -148,7 +149,7 @@ function EvalBar({
             background: customStyles.whitePlayerColor,
             color: customStyles.whitePlayerNameColor,
             fontSize: "1.3rem",
-            padding: "1px 13px",
+            padding: "6px 13px",
           }}
         >
           <b>{formatName(whitePlayer)}</b>
@@ -160,12 +161,24 @@ function EvalBar({
             background: customStyles.blackPlayerColor,
             color: customStyles.blackPlayerNameColor,
             fontSize: "1.3rem",
-            padding: "1px 13px",
+            padding: "6px 13px",
           }}
         >
           <b>{formatName(blackPlayer)}</b>
         </Typography>
       </Box>
+      <div style={{
+        textAlign: "center",
+        position: "absolute",
+        top: "0px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        fontSize: "0.9rem",
+      }}>
+      {lastFEN && (
+         "Move "+ getLastMove(lastFEN)
+      )}
+      </div>
 
       <Typography
         variant="h7"
@@ -211,21 +224,7 @@ function EvalBar({
         </Box>
       )}
       <audio ref={blunderSoundRef} src={blunderSound} />
-      {lastFEN && (
-        <Typography
-          variant="h7"
-          className="last-move"
-          style={{
-            position: "absolute",
-            top: "1px",
-            left: "2px",
-            fontSize: "12px",
-            color: customStyles.lastMoveColor,
-          }}
-        >
-          {getLastMove(lastFEN)}
-        </Typography>
-      )}
+
       {displayBlunder && (
           <div style={{
             borderRadius: "50%",
