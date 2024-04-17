@@ -1,0 +1,5 @@
+1) Add routing
+2) Improve the visuals of blunder alert
+3) Refactor the code and improve the code quality
+    i) Use better variable names
+    ii) Have styles, utils, folders
