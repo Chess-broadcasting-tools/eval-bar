@@ -170,10 +170,11 @@ function EvalBar({
       <div style={{
         textAlign: "center",
         position: "absolute",
+        color : "white",
         top: "0px",
         left: "50%",
         transform: "translateX(-50%)",
-        fontSize: "1.04rem",
+        fontSize: "1rem",
       }}>
       {lastFEN && (
          "#"+ getLastMove(lastFEN)
