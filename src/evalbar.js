@@ -177,7 +177,7 @@ function EvalBar({
         fontSize: "1rem",
       }}>
       {lastFEN && (
-         "#"+ getLastMove(lastFEN)
+         " #"+ getLastMove(lastFEN)
       )}
       </div>
 
@@ -185,9 +185,10 @@ function EvalBar({
         variant="h7"
         className={evalDisplayClass}
         style={{
-          marginTop: result !== null ? "7px" : "3px",
+          marginTop: result !== null ? "7px" : "7px",
           marginBottom: "5px",
           fontSize: "23px",
+          color: result !== null ? "white" : "black",
           fontWeight: "bold",
           position: "absolute",
           zIndex: 1,
