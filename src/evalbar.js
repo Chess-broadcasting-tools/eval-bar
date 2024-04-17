@@ -173,10 +173,10 @@ function EvalBar({
         top: "0px",
         left: "50%",
         transform: "translateX(-50%)",
-        fontSize: "0.9rem",
+        fontSize: "1.04rem",
       }}>
       {lastFEN && (
-         "Move "+ getLastMove(lastFEN)
+         "#"+ getLastMove(lastFEN)
       )}
       </div>
 
