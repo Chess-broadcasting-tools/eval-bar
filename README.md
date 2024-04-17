@@ -15,7 +15,7 @@ To get started with the project, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/Bot-Rakshit/eval-bar.git
+   git clone https://github.com/Chess-broadcasting-tools/eval-bar.git
    ```
 
 2. **Install Dependencies**:
