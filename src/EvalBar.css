@@ -18,7 +18,7 @@
   font-size: 12px; /* Adjusted font size */
   margin-top: 9px; /* Moved above the player names */
   margin-bottom: 5px;
-  position: absolute; /* Position absolutely */
+  position: absolute; 
   top: 53%; /* Align to the top */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center horizontally */
