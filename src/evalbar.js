@@ -83,20 +83,8 @@ function EvalBar({
     if (parts.includes("Praggnanandhaa")) {
       return "Pragg";
     }
-    if (parts.includes("Praggnanandhaa,")) {
-      return "Pragg";
-    }
-    if (parts.includes("Nepomniachtchi,")) {
-      return "Nepo";
-    }
     if (parts.includes("Nepomniachtchi")) {
       return "Nepo";
-    }
-    if (parts.includes("Warmerdam")) {
-      return "Max";
-    }
-    if (parts.includes("Goryachkina,")) {
-      return "Gorya";
     }
     if (parts.includes("Goryachkina")) {
       return "Gorya";
