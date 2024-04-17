@@ -2,7 +2,7 @@ body {
     --primary-font: 'Roboto', sans-serif;
     --transition-speed: 0.3s;
     --primary-color: rgb(21, 185, 81);
-    background: rgb(47, 130, 88);
+    background: rgb(0, 0, 0);
     --container-bg: rgba(13, 255, 0, 0.9);
     --border-color: #ccc;
     --focus-color: #30517c;

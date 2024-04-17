@@ -34,7 +34,7 @@ function LandingPage() {
 
       <footer>
         <p>© Chessbase India - All rights reserved</p>
-        <a href="wildr-logs"> Click here for Wildr logs</a>
+  
       </footer>
     </div>
   );
