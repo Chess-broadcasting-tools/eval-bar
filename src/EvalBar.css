@@ -91,12 +91,15 @@
 }
 
 .eval-container.blink-border {
-  animation: blink-border 30s;
+  animation: blink-border 1s infinite;
 }
 
 @keyframes blink-border {
   0%, 100% {
-    border-width: 4px;
     border-color: red;
+    border-width: 6px;
+  }
+  50% {
+    border-color: white;
   }
 }
