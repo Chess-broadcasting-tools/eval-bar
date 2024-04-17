@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import "./EvalBar.css";
-import blunderSound from "./blunder-sound.mp3";
+import blunderSound from "../../assets/blunder-sound.mp3";
 
 function EvalBar({
   evaluation,
@@ -23,11 +23,11 @@ function EvalBar({
 
   const onBlunderFunction = () => {
     onBlunder();
-    setDisplayBlunder(true)
+    setDisplayBlunder(true);
     setTimeout(() => {
-      setDisplayBlunder(false)
+      setDisplayBlunder(false);
     }, 60000);
-  }
+  };
 
   useEffect(() => {
     if (prevEvaluationRef.current !== null) {
@@ -44,7 +44,7 @@ function EvalBar({
       };
 
       if (isBlunder(prevEval, currentEval)) {
-        onBlunderFunction()
+        onBlunderFunction();
       }
     }
     prevEvaluationRef.current = evaluation;
@@ -155,18 +155,18 @@ function EvalBar({
           <b>{formatName(blackPlayer)}</b>
         </Typography>
       </Box>
-      <div style={{
-        textAlign: "center",
-        position: "absolute",
-        color : "white",
-        top: "0px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        fontSize: "1rem",
-      }}>
-      {lastFEN && (
-         " #"+ getLastMove(lastFEN)
-      )}
+      <div
+        style={{
+          textAlign: "center",
+          position: "absolute",
+          color: "white",
+          top: "0px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontSize: "1rem",
+        }}
+      >
+        {lastFEN && " #" + getLastMove(lastFEN)}
       </div>
 
       <Typography
@@ -216,22 +216,25 @@ function EvalBar({
       <audio ref={blunderSoundRef} src={blunderSound} />
 
       {displayBlunder && (
-          <div style={{
+        <div
+          style={{
             borderRadius: "50%",
             padding: "2px",
-            background: 'red',
+            background: "red",
             position: "absolute",
             top: "0px",
             right: "0px",
             // bouncing animation for 10 seconds
             animation: "pulse 1.5s infinite",
             fontSize: "12px",
-          }}>??</div>
+          }}
+        >
+          ??
+        </div>
       )}
     </Box>
   );
 }
-
 
 // get the last move from FEN
 
