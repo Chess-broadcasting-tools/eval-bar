@@ -167,32 +167,36 @@ function TournamentsList({ onSelect }) {
   };
 
   return (
-    <TournamentsWrapper>
-      <Title>LIVE BROADCASTS</Title>
-      <SearchWrapper>
-        <SearchInput
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search tournaments..."
-        />
-        <SearchButton onClick={handleSearch}>Search</SearchButton>
+  <TournamentsWrapper>
+    <Title>LIVE BROADCASTS</Title>
+    <SearchWrapper>
+      <SearchInput
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search tournaments..."
+      />
+      <SearchButton onClick={handleSearch}>Search</SearchButton>
 
-        <SearchInput
-          value={customUrl}
-          onChange={handleCustomUrlChange}
-          placeholder="Enter custom Lichess URL..."
-        />
-        <SearchButton onClick={onSelectTournament}>Go</SearchButton>
-      </SearchWrapper>
-      <Button
-        onClick={() => {
-          onSelect(selectedTournaments);
-          setSelectedTournaments([]);
-        }}
-      >
-        Confirm
-      </Button>
-      {filteredTournaments.map((tournament, index) =>
+      <SearchInput
+        value={customUrl}
+        onChange={handleCustomUrlChange}
+        placeholder="Enter custom Lichess URL..."
+      />
+      <SearchButton onClick={onSelectTournament}>Go</SearchButton>
+    </SearchWrapper>
+    <Button
+      onClick={() => {
+        onSelect(selectedTournaments);
+        setSelectedTournaments([]);
+      }}
+    >
+      Confirm
+    </Button>
+
+    {filteredTournaments.length === 0 ? (
+      <p>No ongoing broadcasts</p>
+    ) : (
+      filteredTournaments.map((tournament, index) =>
         tournament.tour && tournament.rounds && tournament.rounds.length > 0 ? (
           <Card
             key={tournament.tour.id}
@@ -235,9 +239,10 @@ function TournamentsList({ onSelect }) {
             </Button>
           </Card>
         ) : null
-      )}
-    </TournamentsWrapper>
-  );
-}
+      )
+    )}
+  </TournamentsWrapper>
+);
+
 
 export default TournamentsList;
