@@ -7,6 +7,10 @@ const TournamentsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const NoBroadcastsMessage = styled.p`
+  color: #faf9f6; /* White color */
+  font-size: 1.2em; /* Bigger font size */
+`;
 
 const Card = styled.div`
   display: flex;
@@ -32,9 +36,9 @@ const Card = styled.div`
   }
 
   .card-image {
-    width: 100%; // Adjust the width of the image
-    height: auto; // Maintain aspect ratio
-    margin-bottom: 1rem; // Add some space below the image
+    width: 100%; /* Adjust the width of the image */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 1rem; /* Add some space below the image */
   }
 `;
 
@@ -81,14 +85,13 @@ const Button = styled.a`
 `;
 
 const Title = styled.h1`
-  borderbottom: 5px solid #4caf50;
-  paddingbottom: 1rem;
-  fontsize: 2em;
-  fontweight: bold;
+  border-bottom: 5px solid #4caf50;
+  padding-bottom: 1rem;
+  font-size: 2em;
+  font-weight: bold;
   color: #4caf50;
-  textalign: center;
-  marginbottom: 3rem;
-  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 3rem;
 `;
 
 const SearchWrapper = styled.div`
@@ -116,7 +119,8 @@ const SearchButton = styled.button`
     background-color: #36a420;
   }
 `;
-function TournamentsList({ onSelect }) {
+
+const TournamentsList = ({ onSelect }) => {
   const [tournaments, setTournaments] = useState([]);
   const [filteredTournaments, setFilteredTournaments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -124,6 +128,7 @@ function TournamentsList({ onSelect }) {
   const [checkedItems, setCheckedItems] = useState({});
   const [customUrl, setCustomUrl] = useState("");
   const [tournamentId, setTournamentId] = useState("");
+  const [broadcasts, setBroadcasts] = useState(true);
 
   useEffect(() => {
     fetch("https://lichess.org/api/broadcast?nb=50")
@@ -140,8 +145,13 @@ function TournamentsList({ onSelect }) {
         );
         setTournaments(ongoingTournaments);
         setFilteredTournaments(ongoingTournaments);
+        if (ongoingTournaments.length === 0) {
+          setBroadcasts(false);
+        }
       })
-      .catch((error) => console.error("Error fetching tournaments:", error));
+      .catch((error) =>
+        console.error("Error fetching tournaments:", error)
+      );
   }, []);
 
   const handleSearch = () => {
@@ -167,36 +177,32 @@ function TournamentsList({ onSelect }) {
   };
 
   return (
-  <TournamentsWrapper>
-    <Title>LIVE BROADCASTS</Title>
-    <SearchWrapper>
-      <SearchInput
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search tournaments..."
-      />
-      <SearchButton onClick={handleSearch}>Search</SearchButton>
+    <TournamentsWrapper>
+      <Title>LIVE BROADCASTS</Title>
+      <SearchWrapper>
+        <SearchInput
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search tournaments..."
+        />
+        <SearchButton onClick={handleSearch}>Search</SearchButton>
 
-      <SearchInput
-        value={customUrl}
-        onChange={handleCustomUrlChange}
-        placeholder="Enter custom Lichess URL..."
-      />
-      <SearchButton onClick={onSelectTournament}>Go</SearchButton>
-    </SearchWrapper>
-    <Button
-      onClick={() => {
-        onSelect(selectedTournaments);
-        setSelectedTournaments([]);
-      }}
-    >
-      Confirm
-    </Button>
-
-    {filteredTournaments.length === 0 ? (
-      <p>No ongoing broadcasts</p>
-    ) : (
-      filteredTournaments.map((tournament, index) =>
+        <SearchInput
+          value={customUrl}
+          onChange={handleCustomUrlChange}
+          placeholder="Enter custom Lichess URL..."
+        />
+        <SearchButton onClick={onSelectTournament}>Go</SearchButton>
+      </SearchWrapper>
+      <Button
+        onClick={() => {
+          onSelect(selectedTournaments);
+          setSelectedTournaments([]);
+        }}
+      >
+        Confirm
+      </Button>
+      {filteredTournaments.map((tournament, index) =>
         tournament.tour && tournament.rounds && tournament.rounds.length > 0 ? (
           <Card
             key={tournament.tour.id}
@@ -234,15 +240,18 @@ function TournamentsList({ onSelect }) {
               <CardDate>{tournament.tour.date}</CardDate>
             </CardHeader>
             <CardDescription>{tournament.tour.description}</CardDescription>
-            <Button href={tournament.tour.url} target="_blank" rel="noreferrer">
+            <Button
+              href={tournament.tour.url}
+              target="_blank"
+              rel="noreferrer"
+            >
               Official Website
             </Button>
           </Card>
         ) : null
-      )
-    )}
-  </TournamentsWrapper>
-);
-
+      )}
+    </TournamentsWrapper>
+  );
+};
 
 export default TournamentsList;
